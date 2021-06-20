@@ -1,12 +1,18 @@
 
-body{
+body, html{
     margin: 0;
+    padding: 0;
     height: 100vh;
     display: flex;
     flex-direction: column;
+    background-color: aqua;
+}
+* {
+    box-sizing: border-box;
 }
 .index__principal{    
     height: 100%;
+    display: flex;
 }
 .index__menuIzq{
     display: none;
