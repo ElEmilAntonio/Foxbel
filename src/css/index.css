@@ -5,10 +5,6 @@ body, html{
     height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: aqua;
-}
-* {
-    box-sizing: border-box;
 }
 .index__principal{    
     height: 100%;
