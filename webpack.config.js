@@ -1,5 +1,22 @@
 const path = require('path');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const generateHtmlPlugin = (title) => {
+  return new HtmlWebpackPlugin({
+    title, 
+    filename: `${title}.html`,
+    template: `${title}.html`,
+    chunks: [title]
+  });
+}
+
+const populateHtmlPlugins = (array) => {
+  res = [];
+  array.forEach(page => res.push(generateHtmlPlugin(page)));
+  return res;
+}
+
+const pages = populateHtmlPlugins(["index", "another-page"]);
 
 
 module.exports = {
@@ -11,10 +28,9 @@ module.exports = {
   output: {
     filename: '[name].js',
     path: path.join(__dirname, './dist'),
+    clean: true,
   },
-  plugins: [
-    new CleanWebpackPlugin(),
-  ],
+  plugins: pages,
   module: {
     rules: [
       {
