@@ -1,0 +1,39 @@
+
+body, html{
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: aqua;
+}
+* {
+    box-sizing: border-box;
+}
+.index__principal{    
+    height: 100%;
+    display: flex;
+}
+.index__menuIzq{
+    display: none;
+    height: 100%;
+    background-color: var(--rojo-oscuro);
+    color: var(--blanco);
+}
+.index__contenido{
+    width: 100%;
+}
+.index__reproductor{
+    background-color: var(--rojo-reproductor);
+}
+
+
+@media(min-width: 768px){
+    .index__menuIzq{
+        display: flex;
+        width: 25%;
+    }
+    .index__contenido{
+        width: 75%;
+    }
+}

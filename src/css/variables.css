@@ -1,0 +1,15 @@
+:root{
+  --blanco: #FFFFFF;
+  --rojo-primario: rgba(232, 96, 96, 1);
+  --rojo-oscuro: rgba(102, 35, 35, 1);
+  --rojo-reproductor: rgba(235, 87, 87, 1);
+  --negro-texto: rgba(85, 85, 85, 1);
+  --gris-texto: rgba(130, 130, 130, 1);
+}
+
+/*
+@font-face {
+  font-family: Quicksand;
+  src: url('../Fonts/Quicksand.woff');
+}
+*/
