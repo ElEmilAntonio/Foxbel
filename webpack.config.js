@@ -1,7 +1,5 @@
 const path = require('path');
-<<<<<<< HEAD
 
-=======
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
 
@@ -32,5 +30,5 @@ module.exports = {
       }
     ]
   }
->>>>>>> devo_gama
+
 };

@@ -1,7 +1,4 @@
 {
-<<<<<<< HEAD	
-=======
     "presets": ["@babel/preset-env"],
     "plugins": ["@babel/plugin-proposal-class-properties"]
->>>>>>> devo_gama
 }
