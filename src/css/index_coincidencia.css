@@ -1,5 +1,5 @@
 
-.index__coincidencia{
+.idx_coincidencia{
     display: flex;
     margin: 0 5% 0 5%;
     height: 150px;
@@ -38,7 +38,7 @@
     color: var(--blanco);
     padding: 2%;
 }
-.index__coincidencia .descripcion *{    
+.idx_coincidencia .descripcion *{    
     margin: 0;
     font-family: Quicksand;
 }

@@ -1,5 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 
 const generateHtmlPlugin = (title) => {
   return new HtmlWebpackPlugin({
@@ -9,24 +11,32 @@ const generateHtmlPlugin = (title) => {
     chunks: [title]
   });
 }
+const generateCSSPlugin = () => {
+  return new MiniCssExtractPlugin({
+    filename: `css/[name].css`,
+  });
+}
 
 const populateHtmlPlugins = (array) => {
   res = [];
-  array.forEach(page => res.push(generateHtmlPlugin(page)));
+  array.forEach(page => {
+    res.push(generateHtmlPlugin(page));
+    res.push(generateCSSPlugin());
+  });
   return res;
 }
 
-const pages = populateHtmlPlugins(["index", "another-page"]);
+const pages = populateHtmlPlugins(["index", "anotherpage"]);
 
 
 module.exports = {
   entry: {
     index: path.resolve(__dirname, './src/js/index.js'),
-    another_page: './src/js/another-page.js'
+    anotherpage: './src/js/anotherpage.js'
   },
   mode: 'none',
   output: {
-    filename: '[name].js',
+    filename: 'js/[name].js',
     path: path.join(__dirname, './dist'),
     clean: true,
   },
@@ -42,6 +52,22 @@ module.exports = {
             presets: ['@babel/preset-env']
           }
         }
+      },
+      { 
+        test: /\.css$/i,
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+      },
+      {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'Quicksand.[ext]',
+              outputPath: 'fonts/'
+            }
+          }
+        ]
       }
     ]
   }

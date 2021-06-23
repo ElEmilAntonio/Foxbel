@@ -1,0 +1,1 @@
+import '../css/index_resultados.css';

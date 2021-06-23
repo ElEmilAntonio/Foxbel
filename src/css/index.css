@@ -1,3 +1,7 @@
+@import url('variables.css');
+@import url('index_buscador.css');
+@import url('index_coincidencia.css');
+@import url('index_resultados.css');
 
 body, html{
     margin: 0;
@@ -10,26 +14,36 @@ body, html{
 
 :focus{ outline: none }
 
-.index__principal{    
+.idx_main{    
     height: calc(100% - 60px);
     display: flex;
 }
-.index__menuIzq{
+.idx_menuIzq{
     display: none;
     height: 100%;
     background-color: var(--rojo-oscuro);
     color: var(--blanco);
 }
-.index__contenido{
+.idx_container{
     width: 100%;
     overflow-y: auto;
 }
-.index__contenido .index__buscador,
-.index__contenido .index__coincidencia{
+.idx_container .idx_buscador,
+.idx_container .idx_coincidencia{
     margin-bottom: 20px;
 }
 
-.index__reproductor{
+.idx_player{
     height: 60px;
     background-color: var(--rojo-reproductor);
+}
+
+@media(min-width: 768px){
+    .idx_menuIzq{
+        display: flex;
+        width: 25%;
+    }
+    .idx_container{
+        width: 75%;
+    }
 }
