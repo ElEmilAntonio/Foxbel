@@ -1,18 +1,45 @@
+*{
+box-sizing: border-box;
+}
+/*margin y paddin 0 */
+body,header,footer,#contenido{
+margin: 0px;
+padding: 0px;
+}
+
+/*Fuente y color de letra blanco */
+nav a, nav h3{
+font-family:arial;
+color: #FFFFFF;
+}
+
+body{
+width:  100vw;
+height: 100vh;
+}
+
 header{
-width: 15%;
-height: 100%;
-position: absolute;
-left: 0px;
-top: 0px;	
+height: 85%;
+display:inline-block;
+}
+
+#contenido{
+float: right;
+background: black;
+height:  85%; 
+display: flex;
+}
+
+footer{
+width: 100%;
+height: 14%; 
+background-color:#FF5252;
 }
 
 header nav{
   background-color:#662323;
-  width:100%;
   height: 100%;
   float: left;
-  left: 0px;
-  top: 0px;
   display: block;
 }
 
@@ -20,49 +47,62 @@ header nav{
 #logo{
 width: 100%;
 padding-top: 20px;
-padding-left: 10px;
-height: auto;	
+padding-left: 15px;
 }
 
-#logo h2{
-display: inline-block;
-vertical-align: middle;
-}
 
 #logo img{
-width:160px;
+width: 85%;
 height: auto;
 margin: 0 auto;
 }
-
-
 
 nav ul li{
   list-style: none;
   padding-bottom: 10px;
 }
 
+nav ul li div{
+ display: inline-block;
+ width: 3px;
+ height: 10px; 
+}
+
 nav a{
-  font-family:arial;
-  display: block;
-  color: #FFFFFF;
   text-decoration:none;
 }
 
-nav h2{
-  font-family:arial;
-  color: #FFFFFF;
-  display: inline-block;
-  border: 0;
+ nav li: hover +  div{
+  background:  #FF5252;
+  transition:all 500ms;
 }
-
-nav h3{
-  font-family:arial;
-  color: #FFFFFF;
-}
-
 
 nav a:hover{
 color:  #FF5252 ;
 transition:all 500ms;
+}
+
+
+/*Pal celular */
+#contenido,header{
+width: 100%;
+}
+
+
+@media only screen and (min-width: 500px) {
+header {width: 25%;}
+#contenido {width: 75%;}
+nav    {width: 100%;}
+}
+
+@media only screen and (min-width: 768px){
+header {width:20%;}
+#contenido {width: 80%;}
+nav    {width: 100%;}  
+}
+
+@media only screen and (min-width: 1000px){
+header {width:15%;}
+#contenido {width: 85%;}
+nav    {width: 100%;}  
 }
