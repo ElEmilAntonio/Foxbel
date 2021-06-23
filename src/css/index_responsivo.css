@@ -1,0 +1,9 @@
+@media(min-width: 768px){
+    .index__menuIzq{
+        display: flex;
+        width: 25%;
+    }
+    .index__contenido{
+        width: 75%;
+    }
+}
