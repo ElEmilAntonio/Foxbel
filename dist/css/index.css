@@ -15,13 +15,13 @@
 }
 
 
-.idx_buscador{
+.search-container{
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 0 5% 0 5%;
 }
-.idx_buscador input{
+.search-container input{
     width: 50%;  
     height: 30px;
     font-style: normal;
@@ -37,10 +37,10 @@
     border-radius: 100px;
     border: 1px solid var(--gris-alt);
 }
-.idx_buscador input::placeholder{
+.search-container input::placeholder{
     color: var(--gris-suave);
 }
-.idx_buscador div{
+.search-container div{
     display: flex;
     align-items: center;
     font-size: 14px;
@@ -48,26 +48,26 @@
     font-weight: 400;
     color: var(--gris-alt);
 }
-.icon_user{
+.icon-user{
     width: 25px;
     height: 25px;
     margin-right: 10px;
 }
 
-.idx_coincidencia{
+.first-result-container{
     display: flex;
     margin: 0 5% 0 5%;
     height: 150px;
 }
-.caratula{
+.album-container{
     position: relative;
     width: 150px;
 }
-.caratula img{
+.album-container img{
     width: 100%;
     height: 100%;
 }
-.caratula .icon{
+.album-container .icon{
     float: left;
     position: absolute;
     top: calc(50% - 32.5px);
@@ -77,11 +77,11 @@
     font-size: 65px;
     transition: transform 0.5s;
 }
-.caratula .icon:hover{
+.album-container .icon:hover{
     transform: scale(1.1);
     cursor: pointer;
 }
-.descripcion{
+.description-container{
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -93,28 +93,28 @@
     color: var(--blanco);
     padding: 2%;
 }
-.idx_coincidencia .descripcion *{    
+.first-result-container .description-container *{    
     margin: 0;
     font-family: Quicksand;
 }
-#album__titulo{
+#album-title{
     font-style: normal;
     font-weight: bold;
     font-size: 22px;
     line-height: 27px;
 }
-.extra_info{
+.album-info{
     display: flex;
     align-items: center;
 }
-#artista{
+#artist{
     margin-right: 1rem; 
     font-size: 14px;
     line-height: 17px;
     margin-top: auto;
     margin-bottom: auto;
 }
-#seguidores{
+#followers{
     color: rgb(128, 9, 9);
     font-size: 10px;
     line-height: 12px;
@@ -122,7 +122,7 @@
     margin-top: auto;
     margin-bottom: auto;
 }
-.botones button{
+.buttons-container button{
     border-radius: 100px;
     font-style: normal;
     font-weight: normal;
@@ -132,13 +132,13 @@
     height: 30px;
     cursor: pointer;
 }
-.botones .reproducir{
+.buttons-container .btn-play{
     background: #E86060;
     mix-blend-mode: normal;
     border: none;
     color: var(--blanco);
 }
-.botones .seguir{
+.buttons-container .btn-follow{
     background: none;
     border: 1px solid #EB5757;
     color: var(--rojo-primario);
@@ -146,38 +146,38 @@
 }
 
 
-.idx_results{
+.results-container{
     margin: 0 5% 0 5%;
 }
-.titulo{
+.results-title{
     font-style: normal;
     font-weight: bold;
     font-size: 22px;
     margin-bottom: 10px;
     color: var(--rojo-primario);
 }
-.fila{
+.row{
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
 }
-.results_contenedor{
+.result-container{
     display: flex;
     flex-direction: column;
 }
-.results_contenedor *{
+.result-container *{
     margin: 0;
 }
-.results_caratula{
+.result-album-container{
     position: relative;
     width: 12vw;
     margin-bottom: 5px;
 }
-.results_caratula img{
+.result-album-container img{
     width: 100%;
     height: 100%;
 }
-.results_caratula .icon{
+.result-album-container .icon{
     float: left;
     position: absolute;
     top: calc(50% - 20px);
@@ -187,16 +187,16 @@
     font-size: 40px;
     transition: transform 0.5s;
 }
-.results_caratula .icon:hover{
+.result-album-container .icon:hover{
     transform: scale(1.1);
     cursor: pointer;
 }
-.results_album{
+.result-album-title{
     font-weight: bold;
     font-size: 14px;
     color: var(--negro-texto);
 }
-.results_artista{
+.result-album-artist{
     color: var(--gris-texto);
     font-size: 12px;
 }
@@ -211,36 +211,36 @@ body, html{
 
 :focus{ outline: none }
 
-.idx_main{    
+.main-container{    
     height: calc(100% - 60px);
     display: flex;
 }
-.idx_menuIzq{
+.menu-container{
     display: none;
     height: 100%;
     background-color: var(--rojo-oscuro);
     color: var(--blanco);
 }
-.idx_container{
+.main-section{
     width: 100%;
     overflow-y: auto;
 }
-.idx_container .idx_buscador,
-.idx_container .idx_coincidencia{
+.main-section .search-container,
+.main-section .first-result-container{
     margin-bottom: 20px;
 }
 
-.idx_player{
+.player-container{
     height: 60px;
     background-color: var(--rojo-reproductor);
 }
 
 @media(min-width: 768px){
-    .idx_menuIzq{
+    .menu-container{
         display: flex;
         width: 25%;
     }
-    .idx_container{
+    .main-section{
         width: 75%;
     }
 }

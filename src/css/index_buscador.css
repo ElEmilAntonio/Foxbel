@@ -1,11 +1,11 @@
 
-.idx_buscador{
+.search-container{
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 0 5% 0 5%;
 }
-.idx_buscador input{
+.search-container input{
     width: 50%;  
     height: 30px;
     font-style: normal;
@@ -21,10 +21,10 @@
     border-radius: 100px;
     border: 1px solid var(--gris-alt);
 }
-.idx_buscador input::placeholder{
+.search-container input::placeholder{
     color: var(--gris-suave);
 }
-.idx_buscador div{
+.search-container div{
     display: flex;
     align-items: center;
     font-size: 14px;
@@ -32,7 +32,7 @@
     font-weight: 400;
     color: var(--gris-alt);
 }
-.icon_user{
+.icon-user{
     width: 25px;
     height: 25px;
     margin-right: 10px;

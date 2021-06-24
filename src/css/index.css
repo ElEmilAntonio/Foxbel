@@ -14,36 +14,36 @@ body, html{
 
 :focus{ outline: none }
 
-.idx_main{    
+.main-container{    
     height: calc(100% - 60px);
     display: flex;
 }
-.idx_menuIzq{
+.menu-container{
     display: none;
     height: 100%;
     background-color: var(--rojo-oscuro);
     color: var(--blanco);
 }
-.idx_container{
+.main-section{
     width: 100%;
     overflow-y: auto;
 }
-.idx_container .idx_buscador,
-.idx_container .idx_coincidencia{
+.main-section .search-container,
+.main-section .first-result-container{
     margin-bottom: 20px;
 }
 
-.idx_player{
+.player-container{
     height: 60px;
     background-color: var(--rojo-reproductor);
 }
 
 @media(min-width: 768px){
-    .idx_menuIzq{
+    .menu-container{
         display: flex;
         width: 25%;
     }
-    .idx_container{
+    .main-section{
         width: 75%;
     }
 }
