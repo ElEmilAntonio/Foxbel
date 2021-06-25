@@ -4,13 +4,14 @@
 <script type="text/javascript" src="main.js"></script>
 <head>
 	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="icon" href="../local_storage/images/icon.png">
 	<title>
 	Fox music >:c
 	</title>
 </head>
 <body>
-  <header>
+  <header class="display-inline">
     <nav>
       <div id="logo">
       	<img src="../local_storage/images/logo_nav.png">	
@@ -30,8 +31,32 @@
 	  </ul>
     </nav>
   </header>
-  <section id="contenido">
-  </section><footer>
+  <section id="contenido" class="go-right">
+  	<div id="buscador">
+  		<form class="display-inline">
+  		  <input type="text" name="search" value="search-song" class="color-icon">	
+  		</form>
+  		<i class="fa fa-search go-right color-icon"></i>
+  	</div>
+  	<div id="div_usuario" class="go-right display-inline font-big">
+  	  <i class="fa fa-user color-icon-primary icon-size"></i> <span id="nombre-usuario">Usuario</span>
+  	</div>
+
+  </section>
+  <footer>
+  <div id="informacion-cancion" class="wi-40 color-white">
+    <img src="../local_storage/images/icon-musico.jpg" class="cuadro-imagen display-inline">
+    <div class="display-inline top-center">
+     <strong>Cancion</strong><br>
+     Autor-Album
+    </div>
+  </div>
+  <div id="control-reproduccion">
+  	
+  </div>
+  <div id="control-audio">
+  	
+  </div>
   </footer>
 </body>
 </html>
