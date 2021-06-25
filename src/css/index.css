@@ -1,4 +1,5 @@
 @import url('variables.css');
+@import url('index_menu.css');
 @import url('index_buscador.css');
 @import url('index_coincidencia.css');
 @import url('index_resultados.css');
@@ -46,4 +47,4 @@ body, html{
     .main-section{
         width: 75%;
     }
-}
+  }
