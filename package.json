@@ -1,7 +1,4 @@
 {
-<<<<<<< HEAD
-
-=======
   "name": "foxbel-music",
   "version": "1.0.0",
   "description": "",
@@ -10,7 +7,6 @@
      "build": "webpack --mode development",
     "produccion": "webpack --mode production",
     "watch": "webpack --watch --mode development"
->>>>>>> devo_gama
   },
   "repository": {
     "type": "git",
