@@ -53,10 +53,6 @@ module.exports = {
           }
         }
       },
-      { 
-        test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
-      },
       {
         test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
         use: [
@@ -64,11 +60,16 @@ module.exports = {
             loader: 'file-loader',
             options: {
               name: 'Quicksand.[ext]',
-              outputPath: 'fonts/'
+              outputPath: 'fonts/',
+              publicPath: '../fonts'
             }
           }
         ]
-      }
+      },
+      { 
+        test: /\.css$/i,
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+      },
     ]
   }
 
