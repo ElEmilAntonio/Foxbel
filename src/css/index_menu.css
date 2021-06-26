@@ -164,8 +164,12 @@
     
     }
     
-    .wi-40{
-    width: 40%;  
+    .wi-43{
+    width: 43%;  
+    }
+
+    .wi-14{
+     width: 14%;
     }
     
     .top-center{
@@ -179,5 +183,54 @@
     #informacion-cancion{
      font-family:arial;
      font-size: 17px;
+    }
+
+    .color-white{
      color: white; 
     }
+
+    .text-center{
+    text-align: center;
+    }
+
+    .button{
+     display: inline-block; 
+    }
+
+    #pause{
+    display: inline-block;
+    }
+
+    .text-20{
+     font-size: 20px; 
+    }
+
+    .slider {
+  -webkit-appearance: none;
+  width: 15%;
+  margin-left: 120px;
+  height: 10px;
+  background:white;
+   border-radius: 10px; 
+  outline: none;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%; 
+  background:white;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background:white;
+  cursor: pointer;
+}
