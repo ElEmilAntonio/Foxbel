@@ -157,27 +157,29 @@
 	</div>
 	
 	
-	<footer class="color-white">
-		<div id="informacion-cancion" class="wi-43 display-inline">
-		  <img src="../local_storage/images/icon-musico.jpg" class="cuadro-imagen display-inline">
-		  <div class="display-inline top-center">
-		   <strong>Cancion</strong><br>
-		   Autor-Album
+	<footer class="color-white display-flex">
+		<div id="informacion-cancion" class="wi-43 display-flex">
+		  <img src="../local_storage/images/icon-musico.jpg" class="cuadro-imagen display-flex">
+		    <div id="informacion-cancion-texto">
+		      <strong>Cancion</strong><br>
+		      Autor-Album
+		    </div>
+		 
+		</div>
+		<div id="control-reproduccion" class="wi-14 display-flex font-big">
+		  <div class="boton-reproductor">
+		 	<i class="fa fa-step-backward"></i>
+		  </div>
+		  <div id="boton-pausa" class="boton-reproductor">
+		  <i class="fa fa-pause"></i>
+		  </div>
+		  <div class="boton-reproductor">
+		 	<i class="	fa fa-step-forward"></i>
 		  </div>
 		</div>
-		<div id="control-reproduccion" class="wi-14 display-inline top-center text-center">
-		 <div id="anterior" class="button go-left">
-		 	<i class="fa fa-step-backward"></i>
-		 </div>
-		 <div id="pause" class="button">
-		 	<i class="	fa fa-pause"></i>
-		 </div>
-		 <div id="siguiente" class="button go-right">
-		 	<i class="	fa fa-step-forward"></i>
-		 </div>
-		</div>
-		<div id="control-audio" class="wi-43 display-inline go-right">
-			<input type="range" name="volume" min="0" max="100" step="1" class="slider go-right top-center">
+		<div id="control-audio" class="wi-43 display-flex font-big">
+			<input type="range" name="volume" min="0" max="100" step="1" class="slider">
+			<i class="fa fa-volume-off font-bigger"></i>
 		</div>
 		</footer>
 </body>

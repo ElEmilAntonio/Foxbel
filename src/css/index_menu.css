@@ -1,236 +1,200 @@
 *{
-    box-sizing: border-box;
-    }
-    
-    
-    
-.display-inline{
-    display: inline-block; 
-   }
- /*Fuente y color de letra blanco */
- nav a, nav h3{
-    font-family:arial;
-    color: #FFFFFF;
-    }
-    
-    .color-icon{
-     color: #BDBDBD; 
-    }  
-    /*
-    input{
-    border-top-style: hidden;
-      border-right-style: hidden;
-      border-left-style: hidden;
-      border-bottom-style: hidden;
-      width: 100%;
-    }
-    
-    input:focus {
-      outline: none;
-    }
-    
-    form{
-     width:95%; 
-    }
-    */
-    #buscador{
-    width:45%;
-    top: -10px;
-    float: left;
-    border-radius: 25px;
-    border: 2px solid #BDBDBD;
-    padding: 10px;
-    }
-    
-    .go-right{
-    float: right; 
-    }
-    
-    .go-left{
-    float: left;  
-    }
-    
-    header{
-    height: 100%;
-    position: fixed;
-    }
-    
-    section{
-    height: auto;
-    padding:20px;
-    }
-    
-    footer{
-    position: fixed;
-       left: 0;
-       bottom: 0;
-       width: 100%;
-    height: 15%; 
-    background-color:#FF5252;
-    }
-    
-    header nav{
-      background-color:#662323;
-      height: 100%;
-      float: left;
-      display: block;
-    }
-    
-    
-    #logo{
-    width: 100%;
-    padding-top: 20px;
-    padding-left: 15px;
-    }
-    
-    
-    #logo img{
-    width: 85%;
-    height: auto;
-    margin: 0 auto;
-    }
-    
-    nav ul li{
-      list-style: none;
-      padding: 0px;
-      border: 0px;
-    }
-    
-    nav ul li div{
-     display: inline-block;
-     width: 8px;
-     height: 20px; 
-    }
-    
-    nav a{
-      text-decoration:none;
-    }
-    
-     nav li:hover +  div{
-      background:  #FF5252;
-      transition: all 500ms;
-    }
-    
-    nav a:hover{
-    color:  #FF5252 ;
-    transition:all 500ms;
-    }
-    
-    
-    /*Pal celular */
-    #contenido,header{
-    width: 100%;
-    }
-    
-    
-    @media only screen and (min-width: 500px) {
-      header {width: 25%;}
-      #contenido {width: 75%;}
-      nav    {width: 100%;}
-    }
-    
-    @media only screen and (min-width: 768px){
-    header {width:20%;}
-    #contenido {width: 80%;}
-    nav    {width: 100%;}  
-    }
-    
-    @media only screen and (min-width: 1000px){
-    header {width:15%;}
-    #contenido {width: 85%;}
-    nav    {width: 100%;}  
-    }
-    
-    /*MANEJO DE ICONOS */
-    .font-big{
-     font-size: 20px; 
-    }
-    
-    #nombre-usuario{
-    margin-left: 10px; 
-    }
-    
-    .color-icon-primary{
-     color:#FF5252 ; 
-    }
-    
-    /*manejor contenido footer*/
-    #informacion-cancion{
-    height: 100%;  
-    }
-    .cuadro-imagen{
-    height:100%;
-    width:auto;
-    
-    }
-    
-    .wi-43{
-    width: 43%;  
-    }
+box-sizing: border-box;
+}
 
-    .wi-14{
-     width: 14%;
-    }
-    
-    .top-center{
-    margin-left:15px;
-      position: absolute;
-      top: 50%;
-      -ms-transform: translateY(-50%);
-      transform: translateY(-50%);
-    }
-    
-    #informacion-cancion{
-     font-family:arial;
-     font-size: 17px;
-    }
+nav ul li{
+list-style: none;
+padding: 0px;
+border: 0px;
+}
 
-    .color-white{
-     color: white; 
-    }
+nav ul li div{
+display: inline-block;
+width: 8px;
+height: 20px; 
+}
 
-    .text-center{
-    text-align: center;
-    }
+nav a{
+text-decoration:none;
+}
 
-    .button{
-     display: inline-block; 
-    }
+nav li:hover +  div{
+background:  #FF5252;
+transition: all 500ms;
+}
 
-    #pause{
-    display: inline-block;
-    }
+nav a:hover{
+color:  #FF5252 ;
+transition:all 500ms;
+}
 
-    .text-20{
-     font-size: 20px; 
-    }
+nav a, nav h3{
+font-family:arial;
+color: #FFFFFF;
+}
 
-    .slider {
-  -webkit-appearance: none;
-  width: 15%;
-  margin-left: 120px;
-  height: 10px;
-  background:white;
-   border-radius: 10px; 
-  outline: none;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
+footer{
+position: fixed;
+ left: 0;
+ bottom: 0;
+ width: 100%;
+height: 15%; 
+background-color:#FF5252;
+color: white;
+}
+
+.display-flex{
+display: flex; 
+}
+
+.font-big{
+font-size: 20px; 
+}
+
+.font-bigger{
+font-size: 50px; 
+}
+
+.cuadro-imagen{
+height:100%;
+width:auto; 
+}
+
+.wi-43{
+width: 43%;  
+}
+
+.wi-14{
+width: 14%;
+}
+
+.color-icon{
+color: #BDBDBD; 
+} 
+
+.boton-reproductor{
+margin:auto 0;
+}
+#buscador{
+width:45%;
+top: -10px;
+float: left;
+border-radius: 25px;
+border: 2px solid #BDBDBD;
+padding: 10px;
+}
+
+#logo{
+width: 100%;
+padding-top: 20px;
+padding-left: 15px;
+}
+
+
+#logo img{
+width: 85%;
+height: auto;
+margin: 0 auto;
+}
+
+#nombre-usuario{
+margin-left: 10px; 
+}
+  
+/*manejor contenido footer*/
+#informacion-cancion{
+height: 100%;
+margin: auto;
+align-items: center;
+}
+
+
+#informacion-cancion-texto{
+padding-left: 15px;
+padding-top: 10px; 
+}
+
+#informacion-cancion{
+font-family:arial;
+font-size: 17px;
+}
+
+#control-reproduccion{
+justify-content: space-between;
+margin:auto 0;
+}
+
+#control-audio{
+justify-content:flex-end;
+margin: auto 0;
+margin-right: 25px;
+}
+
+#boton-pausa{
+border-radius: 50%;
+background:  rgba(255,255,255, 0.4);
+height: 45px;
+width: 45px;
+display: inline-flex;
+-webkit-box-pack: center;
+justify-content: center;
+-webkit-box-align: center;
+align-items: center;
+}
+
+/*Pal celular */
+
+
+@media only screen and (min-width: 500px) {
+header {width: 25%;}
+#contenido {width: 75%;}
+nav    {width: 100%;}
+}
+
+@media only screen and (min-width: 768px){
+header {width:20%;}
+#contenido {width: 80%;}
+nav    {width: 100%;}  
+}
+
+@media only screen and (min-width: 1000px){
+header {width:15%;}
+#contenido {width: 85%;}
+nav    {width: 100%;}  
+}
+
+/*MANEJO DE ICONOS */
+
+
+
+.slider {
+position: relative;
+top: 20px;
+-webkit-appearance: none;
+margin-right: 25px;
+width: 25%;
+height: 7px;
+background:white;
+border-radius: 10px; 
+outline: none;
+-webkit-transition: .2s;
+transition: opacity .2s;
 }
 
 .slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%; 
-  background:white;
-  cursor: pointer;
+-webkit-appearance: none;
+appearance: none;
+width: 20px;
+height: 20px;
+border-radius: 50%; 
+background:white;
+cursor: pointer;
 }
 
 .slider::-moz-range-thumb {
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  background:white;
-  cursor: pointer;
+width: 15px;
+height: 15px;
+border-radius: 50%;
+background:white;
+cursor: pointer;
 }
