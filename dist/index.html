@@ -9,8 +9,9 @@
 <script defer src="js/index.js"></script><link href="../src/css/index.css" rel="stylesheet"></head>
 <body>
 	<div class="main-container">
-		<div class="menu-container display-inline">
-		  <nav>
+		<div id="menu" class="menu-container display-flex">
+		  <nav id="mySidenav">
+		  	<a href="javascript:void(0)" class="boton-cerrar-menu" onclick="closeNav()">&times;</a>
 			<div id="logo">
 				<img src="../local_storage/images/logo_nav.png">	
 			</div>
@@ -31,6 +32,7 @@
 		</div>
 		<div class="main-section">
 			<div class="search-container">
+			<span id="boton-menu" href="javascript:void(0)" onclick="openNav()" >&#9776</span>
 				<input class="search-input" type="text" placeholder="Buscar"/>
 				<div>
 					<img class="icon-user" src="https://www.iconpacks.net/icons/1/free-user-login-icon-305-thumb.png"/>
@@ -184,3 +186,13 @@
 		</footer>
 </body>
 </html>
+
+<script type="text/javascript">
+function openNav() {
+  document.getElementById("menu").style.display="flex";
+}
+
+function closeNav() {
+  document.getElementById("menu").style.display="none";
+}	
+</script>

@@ -142,7 +142,26 @@ justify-content: center;
 align-items: center;
 }
 
+#boton-menu{
+  font-size:30px;
+  cursor:pointer;
+  color:#FF5252 ;
+  display:none;
+}
+
+.boton-cerrar-menu{
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+  display: none;
+}
+
 /*Pal celular */
+@media only screen and (max-width: 768px) {
+#boton-menu{display: flex;}
+.boton-cerrar-menu{display:flex;}
+}
 
 
 @media only screen and (min-width: 500px) {

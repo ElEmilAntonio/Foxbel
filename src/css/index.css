@@ -43,8 +43,10 @@ body, html{
     .menu-container{
         display: flex;
         width: 25%;
+
     }
     .main-section{
         width: 75%;
     }
+    * {all: revert}
   }
