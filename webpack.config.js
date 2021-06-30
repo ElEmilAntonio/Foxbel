@@ -26,7 +26,7 @@ const populateHtmlPlugins = (array) => {
   return res;
 }
 
-const pages = populateHtmlPlugins(["index", "anotherpage"]);
+const pages = populateHtmlPlugins(["index", "channel"]);
 
 
 module.exports = {

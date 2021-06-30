@@ -236,6 +236,11 @@
     height: 25px;
     margin-right: 10px;
 }
+.user-name:hover{
+    cursor: pointer;
+    color: var(--rojo-primario);
+}
+
 
 .first-result-container{
     display: flex;

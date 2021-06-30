@@ -1,4 +1,8 @@
 import '../css/index.css';
-import { getApiData } from "./api_deezer";
+import { initializeAPI, showLogin as login } from "./api_deezer";
 
-getApiData();
+window.showLogin = () =>{
+    login();
+}
+
+initializeAPI();

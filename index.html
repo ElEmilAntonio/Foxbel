@@ -6,9 +6,12 @@
 	<link rel="icon" href="../local_storage/images/icon.png">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<title>Foxbel Music</title>
+	<script src="https://e-cdns-files.dzcdn.net/js/min/dz.js"></script>
 </head>
 <body>
 	<div class="main-container">
+		<div id="dz-root"></div>
+
 		<div class="menu-container display-inline">
 		  <nav>
 			<div id="logo">
@@ -34,13 +37,13 @@
 				<input class="search-input" type="text" placeholder="Buscar"/>
 				<div>
 					<img class="icon-user" src="https://www.iconpacks.net/icons/1/free-user-login-icon-305-thumb.png"/>
-					<p>Nom. Usuario</p>
+					<p id="userName" class="user-name" onclick="showLogin()">Inicia sesión</p>
 				</div>
 			</div>
 			<div class="first-result-container">
 				<div class="album-container">
 					<img id="first-result-cover" src="https://images-na.ssl-images-amazon.com/images/I/41OSwd9KC3L._AC_.jpg"/>
-					<i class="icon material-icons">play_arrow</i>
+					<i class="icon material-icons" >play_arrow</i>
 				</div>
 				<div class="description-container">
 					<p id="album-title">21</p>
@@ -67,7 +70,7 @@
 	</div>
 	
 	
-	<footer>
+	<footer class="player-container">
 		<div id="informacion-cancion" class="wi-40 color-white">
 		  <img src="../local_storage/images/icon-musico.jpg" class="cuadro-imagen display-inline">
 		  <div class="display-inline top-center">
