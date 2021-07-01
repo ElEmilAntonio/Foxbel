@@ -42,11 +42,28 @@ body, html{
 @media(min-width: 768px){
     .menu-container{
         display: flex;
-        width: 25%;
-
+        width: 18%;
     }
     .main-section{
-        width: 75%;
+        width:82%;
     }
-    * {all: revert}
+   
   }
+
+
+  @media(max-width:767px){
+  .menu-container{
+  height: 100%;
+  width: 50%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: var(--rojo-oscuro);
+  overflow-x: hidden;
+  transition: 0.5s;
+  text-align:center;
+}  
+  }
+ 
+    

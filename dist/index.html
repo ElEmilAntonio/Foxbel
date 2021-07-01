@@ -11,7 +11,7 @@
 	<div class="main-container">
 		<div id="menu" class="menu-container display-flex">
 		  <nav id="mySidenav">
-		  	<a href="javascript:void(0)" class="boton-cerrar-menu" onclick="closeNav()">&times;</a>
+		  	<a id="boton-cerrar-menu" class="boton-cerrar-menu" >&times;</a>
 			<div id="logo">
 				<img src="../local_storage/images/logo_nav.png">	
 			</div>
@@ -32,7 +32,7 @@
 		</div>
 		<div class="main-section">
 			<div class="search-container">
-			<span id="boton-menu" href="javascript:void(0)" onclick="openNav()" >&#9776</span>
+			<span id="boton-menu">&#9776</span>
 				<input class="search-input" type="text" placeholder="Buscar"/>
 				<div>
 					<img class="icon-user" src="https://www.iconpacks.net/icons/1/free-user-login-icon-305-thumb.png"/>
@@ -187,12 +187,20 @@
 </body>
 </html>
 
-<script type="text/javascript">
-function openNav() {
-  document.getElementById("menu").style.display="flex";
-}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$('#boton-menu').click(function(){
+$('.menu-container').css("display","flex");	
+});	
 
-function closeNav() {
-  document.getElementById("menu").style.display="none";
-}	
+$('#boton-cerrar-menu').click(function(){
+$('.menu-container').css("display","none");	
+});
+
+
+$(document).ready(function(){
+  $(window).resize(function(){
+   if($(window).width()>=768)  $('.menu-container').css("display","flex");	
+  });
+});
 </script>
