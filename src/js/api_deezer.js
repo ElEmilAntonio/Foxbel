@@ -8,16 +8,19 @@ const initializeAPI = () => {
 		appId  : appID,
 		channelUrl : channelURL
 	});
+    getStatus();
+}
+
+const getStatus = () => {
     DZ.getLoginStatus(res => {
         res.status == 'connected' ? setUserInfo() : alert(res.status);
-    })
+    });
 }
 
 const showLogin = () =>{
     DZ.login(response => {
-        response.authResponse != null ? setUserInfo() 
-                                        : alert('Es necesario identificarse para usar Foxbel Music')
-    }, {perms: 'basic_access,email'});
+        response.status == 'connected' ? setUserInfo() : getStatus()
+    }, {perms: 'basic_access, email, offline_access'});
 }
 
 const setUserInfo = () => {
