@@ -6,8 +6,7 @@
 	<link rel="icon" href="../local_storage/images/icon.png">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<title>Foxbel Music</title>
-	<script src="http://cdn-files.deezer.com/js/min/dz.js"></script>
-<script defer src="js/index.js"></script><link href="css/index.css" rel="stylesheet"></head>
+	<script src="http://cdn-files.deezer.com/js/min/dz.js"></script><script defer src="js/index.js"></script><link href="css/index.css" rel="stylesheet"></head>
 <body>
 	<div class="main-container">
 		<div id="dz-root"></div>
@@ -79,20 +78,28 @@
 	</div>
 	
 	
-	<footer class="player-container">
-		<div id="informacion-cancion" class="wi-40 color-white">
-		  <img src="../local_storage/images/icon-musico.jpg" class="cuadro-imagen display-inline">
-		  <div class="display-inline top-center">
+	<footer class="color-white">
+		<div id="informacion-cancion">
+		  <img src="../local_storage/images/icon-musico.jpg" class="cuadro-imagen">
+		  <div >
 		   <strong>Cancion</strong><br>
 		   Autor-Album
 		  </div>
 		</div>
-		<div id="control-reproduccion">
-			
+		<div id="control-reproduccion" class="wi-14 display-flex">
+		  <div id="anterior" class="button go-left">
+		 	<i class="fa fa-step-backward"></i>
+		  </div>
+		  <div id="pause" class="button">
+		 	<i class="	fa fa-pause"></i>
+		  </div>
+		  <div id="siguiente" class="button go-right">
+		 	<i class="	fa fa-step-forward"></i>
+		  </div>
 		</div>
-		<div id="control-audio">
-			
+		<div id="control-audio" class="wi-43">
+			<input type="range" name="volume" min="0" max="100" step="1" class="slider go-right">
 		</div>
-		</footer>
+	</footer>
 </body>
 </html>
