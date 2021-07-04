@@ -34,6 +34,11 @@ body, html{
     margin-bottom: 20px;
 }
 
+
+.is-hidden{
+    display: none;
+}
+
 .player-container{
     height: 60px;
     background-color: var(--rojo-reproductor);

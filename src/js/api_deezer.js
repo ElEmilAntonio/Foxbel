@@ -20,24 +20,23 @@ const initializeAPI = () => {
 const getStatus = () => { 
     if(user.status == "connected"){  
         let logoutIcon = document.getElementById("logoutIcon");
-        let userName = document.getElementById("userName");
         logoutIcon.classList.remove("is-hidden");
+        let userName = document.getElementById("userName");
         userName.innerHTML = user.name;
         userName.onclick = null;
-        userName.classList.remove("login-hover");      
+        userName.classList.remove("login-hover");  
+        let userUnknownBanner = document.getElementById("user-unknown-banner");
+        userUnknownBanner.classList.add("is-hidden");  
+        let firstResultBanner = document.getElementById("first-result-banner");
+        firstResultBanner.classList.remove("is-hidden");
         getChart();   
     }else{
         alert("Debe identificarse con Deezer para usar Foxbel Music");
     }
-    /*
-    DZ.getLoginStatus(res => {
-        res.status == 'connected' ? setUserInfo() : alert(res.status);
-    });
-    */
 }
 
 const logout = () => {
-    if(confirm("Deseas cerrar sesión?")){
+    if(confirm("¿Deseas cerrar sesión?")){
         updateUserData(null, null, null, 'not_authorized');
         DZ.logout();
     }
@@ -59,24 +58,42 @@ const login = (data) => {
 const updateUserData = (id, name, token, status) => {  
     let logoutIcon = document.getElementById("logoutIcon");
     let userName = document.getElementById("userName");
+    let userUnknownBanner = document.getElementById("user-unknown-banner");  
+    let firstResultBanner = document.getElementById("first-result-banner");
     if(status == 'connected'){
+        //Set localStorage items
         localStorage.setItem("userId", id);
         localStorage.setItem("userName",name);
         localStorage.setItem("userToken",token);
         localStorage.setItem("userStatus", status);
+        //Hidding/showing banners
+        userUnknownBanner.classList.add("is-hidden");
+        firstResultBanner.classList.remove("is-hidden");
+        //Showing logout icon
         logoutIcon.classList.remove("is-hidden");
+        //Setting user name info
         userName.innerHTML = name;
         userName.onclick = null;
-        userName.classList.remove("login-hover");
+        userName.classList.remove("login-hover");  
     }else{
+        //Delete localStorage items
         localStorage.removeItem("userId");
         localStorage.removeItem("userName");
         localStorage.removeItem("userToken");
         localStorage.removeItem("userStatus");
+        //Hidding/showing banners
+        userUnknownBanner.classList.remove("is-hidden");
+        firstResultBanner.classList.add("is-hidden");
+        //Hidding logout icon, resetting userName text/click event
         logoutIcon.classList.add("is-hidden");
         userName.innerHTML = "Inicia sesión";
         userName.onclick = () => showLogin();
-        userName.classList.add("login-hover");        
+        userName.classList.add("login-hover");  
+        //Cleaning search results        
+        const resultsRowOne = document.getElementById("first-row");
+        resultsRowOne.innerHTML = "";
+        const resultsRowTwo = document.getElementById("second-row");
+        resultsRowTwo .innerHTML = "";      
     }
     user.id = localStorage.getItem("userId");
     user.name = localStorage.getItem("userName");
@@ -106,42 +123,6 @@ const getChart = () => {
         })
     });
 }
-
-/*
-const getMainData = () => {
-    const options = {
-        method: 'GET',
-        headers: {
-            'Access-Control-Allow-Origin' : '*',
-            'Access-Control-Allow-Methods':'GET',
-        },
-        mode: 'cors',
-    }
-    fetch(`https://api.deezer.com/chart/0/tracks?index=0&limit=11`, options)
-    .then(res => res.json())
-    .then(res => {
-        const data = res.data;
-        //Mejor coincidencia
-        const album = document.getElementById("album-title");
-        const artist = document.getElementById("artist");
-        const followers = document.getElementById("followers");
-        const cover = document.getElementById("first-result-cover");
-        album.innerHTML = `${data[0].title} - Albúm: ${data[0].album.title}`;
-        artist.innerHTML = `${data[0].artist.name}`;
-        cover.src = data[0].album.cover;
-        data.shift();
-        //Resultados
-        const resultsRowOne = document.getElementById("first-row");
-        const resultsRowTwo = document.getElementById("second-row");
-        data.map((song, index) => {
-            index < 5 ? addToRow(resultsRowOne, song) : addToRow(resultsRowTwo, song)
-        })
-    })
-    .catch(error => {
-        const access_token = window.location.hash;
-    })
-}
-*/
 
 const addToRow = (row, song) => {
     return row.innerHTML += `<div class="result-container">

@@ -1,8 +1,11 @@
 
-.first-result-container{
+.first-result-container, .user-unknown-container{
     display: flex;
     margin: 0 5% 0 5%;
     height: 150px;
+}
+.user-unknown-container .search-icon{
+    font-size: 60px;
 }
 .album-container{
     position: relative;
@@ -26,17 +29,26 @@
     transform: scale(1.1);
     cursor: pointer;
 }
-.description-container{
+.description-container, .user-unknown-container{
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
     background: linear-gradient(0deg, rgba(167, 0, 0, 0.4), rgba(167, 0, 0, 0.4));
     background-repeat: no-repeat;
     background-size: cover;
     mix-blend-mode: normal;
-    width: calc(100% - 150px);
     color: var(--blanco);
     padding: 2%;
+}
+.description-container{
+    width: calc(100% - 150px);
+    justify-content: space-around;
+}
+.user-unknown-container{
+    justify-content: center;
+    align-items: center;
+}
+.user-unknown-container *{
+    margin: 0;
 }
 .first-result-container .description-container *{    
     margin: 0;
