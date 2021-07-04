@@ -231,14 +231,27 @@
     font-weight: 400;
     color: var(--gris-alt);
 }
-.icon-user{
+.icon-user, .icon-logout{
     width: 25px;
     height: 25px;
+}
+.icon-user{
     margin-right: 10px;
 }
-.user-name:hover{
+.icon-logout{
+    color: var(--rojo-oscuro);
+}
+.user-name{
+    margin-right: 10px;
+}
+.login-hover:hover{
     cursor: pointer;
     color: var(--rojo-primario);
+    transform: scale(1.05);
+    transition: all 0.5s;
+}
+.is-hidden{
+    display: none;
 }
 
 

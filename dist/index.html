@@ -6,7 +6,7 @@
 	<link rel="icon" href="../local_storage/images/icon.png">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<title>Foxbel Music</title>
-	<script src="https://e-cdns-files.dzcdn.net/js/min/dz.js"></script>
+	<script src="http://cdn-files.deezer.com/js/min/dz.js"></script>
 <script defer src="js/index.js"></script><link href="css/index.css" rel="stylesheet"></head>
 <body>
 	<div class="main-container">
@@ -37,7 +37,8 @@
 				<input class="search-input" type="text" placeholder="Buscar"/>
 				<div>
 					<img class="icon-user" src="https://www.iconpacks.net/icons/1/free-user-login-icon-305-thumb.png"/>
-					<p id="userName" class="user-name" onclick="showLogin()">Inicia sesión</p>
+					<p id="userName" class="user-name login-hover" onclick="showLogin()">Inicia sesión</p>
+					<i id="logoutIcon" class="icon-logout material-icons login-hover is-hidden" onclick="logout()">logout</i>
 				</div>
 			</div>
 			<div class="first-result-container">
