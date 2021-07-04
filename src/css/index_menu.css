@@ -58,14 +58,11 @@
   }
   
   .cuadro-imagen{
-  height:100%;
-  width:auto; 
+    height:100%;
+    width:auto; 
+    margin-right: 10px;
   }
   
-  
-  .wi-14{
-  width: 14%;
-  }
   
   .color-icon{
   color: #BDBDBD; 
@@ -100,6 +97,8 @@
   
   #control-reproduccion{
     width: 25%;
+    display: flex;
+    align-items: center;
     justify-content: space-between;
     margin:auto 0;
   }
@@ -110,6 +109,10 @@
     align-items: center;
     width: 25%;
     margin: 0;
+  }
+
+  #control-audio i{
+    margin-left: 10px;
   }
   
   #boton-pausa{
