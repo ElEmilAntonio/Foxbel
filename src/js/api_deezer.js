@@ -101,6 +101,30 @@ const updateUserData = (id, name, token, status) => {
     user.status = localStorage.getItem("userStatus");
 }
 
+/*const getChart = () => {
+    DZ.api('/chart/0/tracks?index=0&limit=11', 'GET', res  => {
+        const data = res.data;
+        //Mejor coincidencia
+        const album = document.getElementById("album-title");
+        const artist = document.getElementById("artist");
+        const followers = document.getElementById("followers");
+        const cover = document.getElementById("first-result-cover");
+        album.innerHTML = `${data[0].title} - Albúm: ${data[0].album.title}`;
+        artist.innerHTML = `${data[0].artist.name}`;
+        cover.src = data[0].album.cover;
+        data.shift();
+        //Resultados
+        const resultsRowOne = document.getElementById("first-row");
+        resultsRowOne.innerHTML = "";
+        const resultsRowTwo = document.getElementById("second-row");
+        resultsRowTwo .innerHTML = "";
+        data.map((song, index) => {
+            index < 5 ? addToRow(resultsRowOne, song) : addToRow(resultsRowTwo, song)
+        })
+    });
+}
+*/
+
 const getChart = () => {
     DZ.api('/chart/0/tracks?index=0&limit=11', 'GET', res  => {
         const data = res.data;
@@ -123,6 +147,7 @@ const getChart = () => {
         })
     });
 }
+
 
 const addToRow = (row, song) => {
     return row.innerHTML += `<div class="result-container">
