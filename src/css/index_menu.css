@@ -1,7 +1,7 @@
 *{
   box-sizing: border-box;
   }
-  
+
   nav ul li{
   list-style: none;
   padding: 0px;
@@ -23,14 +23,18 @@
   transition: all 500ms;
   }
   
-  nav a:hover{
+  nav a:hover, nav div span:hover{
   color:  #FF5252 ;
   transition:all 500ms;
   }
   
-  nav a, nav h3{
+  nav a, nav div span, nav h3{
   font-family:arial;
   color: #FFFFFF;
+  }
+
+  .hide-menu{
+    transform: translateX(-100%);
   }
   
   footer{
@@ -43,6 +47,7 @@
     color: white;
     display: flex;
     justify-content: space-between;
+    z-index: 10;
   }
   
   
@@ -78,7 +83,7 @@
     height: auto;
     margin: 0;
   }
-  #logo a{
+  #logo span{
     margin: 0;
   }
   
@@ -140,37 +145,28 @@
     font-size: 36px;
     margin-left: 50px;
     display: none;
+    cursor: pointer;
   }
   
   /*Pal celular */
   @media only screen and (max-width: 768px) {
-  #boton-menu{display: flex;}
-  .boton-cerrar-menu{display:flex;}
+    #boton-menu{display: flex;}
+    .boton-cerrar-menu{display:flex;}
   }
-  
-  
-  @media only screen and (min-width: 500px) {
-  header {width: 25%;}
-  #contenido {width: 75%;}
-  nav    {width: 100%;}
+  /*
+  @media(max-width:767px){
+    .menu-container{
+        height: 100%;
+        width: 40%;
+        position: fixed;
+        z-index: 1;
+    }  
   }
-  
-  @media only screen and (min-width: 768px){
-  header {width:20%;}
-  #contenido {width: 80%;}
-  nav    {width: 100%;}  
-  }
-  
-  @media only screen and (min-width: 1000px){
-  header {width:15%;}
-  #contenido {width: 85%;}
-  nav    {width: 100%;}  
-  }
-  
-  /*MANEJO DE ICONOS */
-  
-  
-  
+  */
+
+
+
+  /*MANEJO DE ICONOS */  
   .slider {
     -webkit-appearance: none;
     width: 50%;

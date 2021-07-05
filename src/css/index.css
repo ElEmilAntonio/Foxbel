@@ -20,7 +20,10 @@ body, html{
     display: flex;
 }
 .menu-container{
-    display: none;
+    transition: all 1s;
+    position: absolute;
+    z-index: 1;
+    width: 40%;
     height: 100%;
     background-color: var(--rojo-oscuro);
     color: var(--blanco);
@@ -40,30 +43,12 @@ body, html{
 }
 
 @media(min-width: 768px){
-    .menu-container{
-        display: flex;
-        width: 18%;
-    }
     .main-section{
-        width:82%;
+      width: 80%;
     }
-   
-  }
-
-
-  @media(max-width:767px){
-  .menu-container{
-  height: 100%;
-  width: 50%;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: var(--rojo-oscuro);
-  overflow-x: hidden;
-  transition: 0.5s;
-  text-align:center;
-}  
-  }
- 
-    
+    .menu-container{
+      position: relative;
+      width: 20%;
+      transform: translateX(0%);
+    }   
+}
