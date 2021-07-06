@@ -6,7 +6,8 @@
 	<link rel="icon" href="../local_storage/images/icon.png">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<title>Foxbel Music</title>
-	<script src="http://cdn-files.deezer.com/js/min/dz.js"></script><script defer src="js/index.js"></script><link href="css/index.css" rel="stylesheet"></head>
+	<script src="https://e-cdns-files.dzcdn.net/js/min/dz.js"></script>
+<script defer src="js/index.js"></script><link href="css/index.css" rel="stylesheet"></head>
 <body>
 	<div class="main-container">
 		<div id="dz-root"></div>
@@ -52,7 +53,7 @@
 				<div id="first-result-banner" class="first-result-container is-hidden">
 					<div class="album-container">
 						<img id="first-result-cover" src="https://images-na.ssl-images-amazon.com/images/I/41OSwd9KC3L._AC_.jpg"/>
-						<i class="icon material-icons" >play_arrow</i>
+						<i id="firstResultPlayIcon" class="track-play icon material-icons" >play_arrow</i>
 					</div>
 					<div class="description-container">
 						<p id="album-title">21</p>
@@ -82,25 +83,25 @@
 	
 	<footer class="color-white">
 		<div id="informacion-cancion">
-		  <img src="../local_storage/images/icon-musico.jpg" class="cuadro-imagen">
-		  <div>
-		   <strong>Cancion</strong><br>
-		   Autor-Album
+		  <img id="playerAlbum"  class="cuadro-imagen">
+		  <div id="playerInfo">
+		   <strong>. . .</strong><br>
+		   . . .
 		  </div>
 		</div>
 		<div id="control-reproduccion">
 		  <div id="boton-anterior">
-		 	<i class="fa fa-step-backward"></i>
+		 	<i class="fa fa-step-backward player-control"></i>
 		  </div>
 		  <div id="boton-pausa">
-		 	<i class="	fa fa-pause"></i>
+		 	<i id="icon-player-play" class="fa fa-play player-control" onclick="resume()"></i>
 		  </div>
 		  <div id="boton-siguiente">
-		 	<i class="fa fa-step-forward"></i>
+		 	<i class="fa fa-step-forward player-control"></i>
 		  </div>
 		</div>
 		<div id="control-audio">
-			<input type="range" name="volume" min="0" max="100" step="1" class="slider go-right" value="0">
+			<input id="volume" type="range" name="volume" min="0" max="100" step="1" class="slider go-right" value="0">
 			<i class="fa fa-volume-off font-bigger"></i>
 		</div>
 	</footer>

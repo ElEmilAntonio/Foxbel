@@ -1,5 +1,5 @@
 import '../css/index.css';
-import { initializeAPI, showLogin as login, logout } from "./api_deezer";
+import { initializeAPI, showLogin as login, logout, playTrack, resume, pause } from "./api_deezer";
 
 window.showLogin = () => login()
 
@@ -8,6 +8,12 @@ window.logout = () => logout()
 window.showMenu = () => showMenu()
 
 window.closeMenu = () => closeMenu()
+
+window.playTrack = (data, element) => playTrack(data, element)
+
+window.resume = () => resume()
+
+window.pause = () => pause()
 
 initializeAPI();
 

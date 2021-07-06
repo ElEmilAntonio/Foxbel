@@ -1,3 +1,5 @@
+import {Track} from './track.js';
+
 const appID = '489402';
 const channelURL = 'http://localhost/foxbel-music/dist/channel.html';
 let user = {
@@ -7,6 +9,22 @@ let user = {
     status: localStorage.getItem("userStatus")
 };
 
+let trackPlayingId = localStorage.getItem("trackPlayingId");
+let trackList = JSON.parse(localStorage.getItem("trackList"));
+let playerVolume = localStorage.getItem("playerVolume");
+let currentTimePlaying = localStorage.getItem("currentTimePlaying");
+let player = {
+    trackPlaying: trackList && trackPlayingId ? new Audio(trackList[trackPlayingId].preview) : null,
+    tracks: trackList ? trackList : [],
+    volume: playerVolume ? playerVolume.volume : 50
+}
+let currentTrack = player.trackPlaying;
+if(currentTrack){
+    currentTrack.currentTime = currentTimePlaying ? currentTimePlaying : 0;
+}
+
+let playerHTML = document.getElementById("icon-player-play");
+
 const appSecretKey = 'a5775013018f7dc67e119742b3b471ee';
 
 const initializeAPI = () => {
@@ -14,7 +32,12 @@ const initializeAPI = () => {
 		appId  : appID,
 		channelUrl : channelURL
 	});
+    setVolume(player.volume);
     getStatus();
+}
+
+const setVolume = (volume) => {
+    document.getElementById("volume").value = volume;
 }
 
 const getStatus = () => { 
@@ -29,6 +52,12 @@ const getStatus = () => {
         userUnknownBanner.classList.add("is-hidden");  
         let firstResultBanner = document.getElementById("first-result-banner");
         firstResultBanner.classList.remove("is-hidden");
+        if(trackPlayingId){
+            let trackTitle = player.tracks[trackPlayingId].title;
+            let artistName = player.tracks[trackPlayingId].artist;
+            let album = player.tracks[trackPlayingId].album;
+            setPlayerInfo(trackTitle, artistName, album);
+        }
         getChart();   
     }else{
         alert("Debe identificarse con Deezer para usar Foxbel Music");
@@ -77,11 +106,7 @@ const updateUserData = (id, name, token, status) => {
         userName.classList.remove("login-hover");  
     }else{
         //Delete localStorage items
-        localStorage.removeItem("userId");
-        localStorage.removeItem("userName");
-        localStorage.removeItem("userToken");
-        localStorage.removeItem("userStatus");
-        //Hidding/showing banners
+        localStorage.clear();
         userUnknownBanner.classList.remove("is-hidden");
         firstResultBanner.classList.add("is-hidden");
         //Hidding logout icon, resetting userName text/click event
@@ -112,29 +137,119 @@ const getChart = () => {
         album.innerHTML = `${data[0].title} - Albúm: ${data[0].album.title}`;
         artist.innerHTML = `${data[0].artist.name}`;
         cover.src = data[0].album.cover;
+        const playIcon = document.getElementById("firstResultPlayIcon");
+        playIcon.setAttribute('data', JSON.stringify(data[0]));
+        playIcon.onclick = () => playTrack(playIcon)
         data.shift();
         //Resultados
         const resultsRowOne = document.getElementById("first-row");
         resultsRowOne.innerHTML = "";
         const resultsRowTwo = document.getElementById("second-row");
         resultsRowTwo .innerHTML = "";
-        data.map((song, index) => {
-            index < 5 ? addToRow(resultsRowOne, song) : addToRow(resultsRowTwo, song)
+        data.map((record, index) => {
+            index < 5 ? addToRow(resultsRowOne, record) : addToRow(resultsRowTwo, record)
         })
     });
 }
 
-const addToRow = (row, song) => {
-    return row.innerHTML += `<div class="result-container">
-                <div class="result-album-container">
-                        <img src="${song.album.cover}"/>
-                        <i class="icon material-icons">play_arrow</i>
-                    </div>
-                    <p class="result-album-title">${song.title}</p>
-                    <p class="result-album-artist">${song.artist.name}</p>
-                </div>`
+const addToRow = (row, record) => {
+    let container = document.createElement("div");
+    container.classList.add("result-container");
+    let albumContainer = document.createElement("div");
+    albumContainer.classList.add("album-container");
+    let img = document.createElement("img");
+    img.src = record.album.cover;
+    let newRecord = document.createElement("i");
+    newRecord.innerHTML = 'play_arrow';
+    newRecord.classList.add("track-play");
+    newRecord.classList.add("icon");
+    newRecord.classList.add("material-icons");
+    newRecord.setAttribute("data", JSON.stringify(record));
+    newRecord.onclick = () => playTrack(newRecord);
+    albumContainer.appendChild(img);
+    albumContainer.appendChild(newRecord);
+    let title = document.createElement("p");
+    title.innerHTML = record.title;
+    let artist = document.createElement("p");
+    artist.innerHTML = record.artist.name;
+    container.appendChild(albumContainer);
+    container.appendChild(title);
+    container.appendChild(artist);
+    row.appendChild(container);
+}
+
+const setPlayerInfo = (trackTitle, artistName, album) => {
+    document.getElementById("playerAlbum").src = album;
+    document.getElementById("playerInfo").innerHTML = `<strong>${trackTitle}</strong><br>${artistName}`;
+}
+
+
+const playTrack = (element) => {
+    if(player.trackPlaying){ 
+        player.trackPlaying.pause(); 
+    }
+    let tracks = document.querySelectorAll('.track-play');
+    tracks.forEach(track => {
+        track.innerHTML = 'play_arrow';
+        track.onclick = () => playTrack(track);
+    })
+    player.tracks = [];
+    const data = JSON.parse(element.getAttribute('data'));
+
+    if(data.preview != player.trackPlaying.src){
+        if(data.tracks){
+            alert("it's an album");
+        }else{
+            const newTrack = new Track(data.artist.name, data.title, data.preview, data.album.cover, data.album.title);        
+            player.tracks.push(newTrack);
+            player.trackPlaying = new Audio(newTrack.preview);
+            setPlayerInfo(newTrack.title, newTrack.artist, newTrack.album);
+        }
+
+        localStorage.setItem("trackPlayingId", 0);
+        localStorage.setItem("trackList", JSON.stringify(player.tracks));
+        localStorage.setItem("volumePlayer", player.volume);
+    }
+    
+    resume();
+}
+
+const pause = (element = undefined) => {
+    player.trackPlaying.pause();
+    playerHTML.classList.add("fa-play");
+    playerHTML.classList.remove("fa-pause");
+    playerHTML.onclick = () => resume();
+    element ? updateElementIcon(element) : updatePlayIcons();
+}
+
+
+const resume = (element = undefined) => {
+    if(player.trackPlaying){
+        player.trackPlaying.play();
+        playerHTML.classList.remove("fa-play");
+        playerHTML.classList.add("fa-pause");
+        playerHTML.onclick = () => pause();
+        element ? updateElementIcon(element) : updatePlayIcons(true);
+    }
+}
+
+const updateElementIcon = (element, setPause = undefined) => {
+    element.innerHTML = setPause ? 'pause' : 'play_arrow';
+    element.onclick = () => setPause ? pause(element) : resume(element);
+}
+
+const updatePlayIcons = (setPause = undefined) => {
+    let tracks = document.querySelectorAll('.track-play');
+    tracks.forEach(track => {
+        const data = JSON.parse(track.getAttribute('data'));
+        if(data.preview == player.trackPlaying.src){
+            track.innerHTML = setPause ? 'pause': 'play_arrow';
+            track.onclick = () => setPause ? pause(track) : resume(track);
+        }
+    });
 }
 
 
 
-export {initializeAPI, showLogin, logout};
+
+export {initializeAPI, showLogin, logout, playTrack, resume, pause};

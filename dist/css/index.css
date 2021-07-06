@@ -137,15 +137,15 @@
   }
   
   #boton-pausa{
-  border-radius: 50%;
-  background:  rgba(255,255,255, 0.4);
-  height: 45px;
-  width: 45px;
-  display: inline-flex;
-  -webkit-box-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  align-items: center;
+    border-radius: 50%;
+    background:  rgba(255,255,255, 0.4);
+    height: 45px;
+    width: 45px;
+    display: inline-flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
   }
   
   #boton-menu{
@@ -210,6 +210,10 @@
   border-radius: 50%;
   background:white;
   cursor: pointer;
+  }
+
+  .player-control{
+    cursor: pointer;
   }
 
 .search-container{
