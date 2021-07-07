@@ -7,7 +7,7 @@
 .user-unknown-container .search-icon{
     font-size: 60px;
 }
-.album-container{
+.first-result-container .album-container{
     position: relative;
     width: 150px;
 }
