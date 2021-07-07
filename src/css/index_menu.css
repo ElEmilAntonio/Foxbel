@@ -87,9 +87,6 @@
     margin: 0;
   }
   
-  #nombre-usuario{
-  margin-left: 10px; 
-  }
     
   /*manejor contenido footer*/
   #informacion-cancion{
@@ -132,14 +129,14 @@
     align-items: center;
   }
   
-  #boton-menu{
+  #btnShowMenu{
     font-size:30px;
     cursor:pointer;
     color:#FF5252 ;
     display:none;
   }
   
-  .boton-cerrar-menu{
+  .btn-close{
     top: 0;
     right: 25px;
     font-size: 36px;
@@ -148,22 +145,31 @@
     cursor: pointer;
   }
   
+  
+  .player-info{    
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+  }
+  .player-text{
+    margin: 0;
+  }
+  .strong{
+    font-weight: 800;
+  }
+
   /*Pal celular */
   @media only screen and (max-width: 768px) {
-    #boton-menu{display: flex;}
-    .boton-cerrar-menu{display:flex;}
+    #btnShowMenu{display: flex;}
+    .btn-close{display:flex;}
   }
-  /*
-  @media(max-width:767px){
-    .menu-container{
-        height: 100%;
-        width: 40%;
-        position: fixed;
-        z-index: 1;
-    }  
-  }
-  */
 
+  @media(min-width: 576px) {
+    .player-info{  font-size: 13px;}
+  }
+  @media(min-width: 768px) {
+    .player-info{  font-size: 15px;}
+  }
 
 
   /*MANEJO DE ICONOS */  

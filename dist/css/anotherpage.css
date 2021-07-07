@@ -10,7 +10,7 @@
 }
 .row{
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     margin-bottom: 20px;
 }
 .result-container{

@@ -14,7 +14,7 @@ let trackList = JSON.parse(localStorage.getItem("trackList"));
 let playerVolume = localStorage.getItem("playerVolume");
 let currentTimePlaying = localStorage.getItem("currentTimePlaying");
 let player = {
-    trackPlaying: trackList && trackPlayingId ? new Audio(trackList[trackPlayingId].preview) : null,
+    trackPlaying: trackList && trackPlayingId ? new Audio(trackList[trackPlayingId].preview) : '',
     tracks: trackList ? trackList : [],
     volume: playerVolume ? playerVolume.volume : 50
 }
@@ -23,7 +23,7 @@ if(currentTrack){
     currentTrack.currentTime = currentTimePlaying ? currentTimePlaying : 0;
 }
 
-let playerHTML = document.getElementById("icon-player-play");
+let playerHTML = document.getElementById("iconPlayerPlay");
 
 const appSecretKey = 'a5775013018f7dc67e119742b3b471ee';
 
@@ -32,8 +32,17 @@ const initializeAPI = () => {
 		appId  : appID,
 		channelUrl : channelURL
 	});
+    setEventListeners();
     setVolume(player.volume);
     getStatus();
+}
+
+const setEventListeners = () => {
+    playerHTML.onclick = () => resume()
+    let userName = document.getElementById("userName");
+    userName.onclick = () => showLogin()
+    let logoutIcon = document.getElementById("logoutIcon");
+    logoutIcon.onclick = () => showLogin()
 }
 
 const setVolume = (volume) => {
@@ -48,9 +57,9 @@ const getStatus = () => {
         userName.innerHTML = user.name;
         userName.onclick = null;
         userName.classList.remove("login-hover");  
-        let userUnknownBanner = document.getElementById("user-unknown-banner");
+        let userUnknownBanner = document.getElementById("userUnknownBanner");
         userUnknownBanner.classList.add("is-hidden");  
-        let firstResultBanner = document.getElementById("first-result-banner");
+        let firstResultBanner = document.getElementById("firstResultBanner");
         firstResultBanner.classList.remove("is-hidden");
         if(trackPlayingId){
             let trackTitle = player.tracks[trackPlayingId].title;
@@ -87,8 +96,8 @@ const login = (data) => {
 const updateUserData = (id, name, token, status) => {  
     let logoutIcon = document.getElementById("logoutIcon");
     let userName = document.getElementById("userName");
-    let userUnknownBanner = document.getElementById("user-unknown-banner");  
-    let firstResultBanner = document.getElementById("first-result-banner");
+    let userUnknownBanner = document.getElementById("userUnknownBanner");  
+    let firstResultBanner = document.getElementById("firstResultBanner");
     if(status == 'connected'){
         //Set localStorage items
         localStorage.setItem("userId", id);
@@ -115,9 +124,9 @@ const updateUserData = (id, name, token, status) => {
         userName.onclick = () => showLogin();
         userName.classList.add("login-hover");  
         //Cleaning search results        
-        const resultsRowOne = document.getElementById("first-row");
+        const resultsRowOne = document.getElementById("firstRow");
         resultsRowOne.innerHTML = "";
-        const resultsRowTwo = document.getElementById("second-row");
+        const resultsRowTwo = document.getElementById("secondRow");
         resultsRowTwo .innerHTML = "";      
     }
     user.id = localStorage.getItem("userId");
@@ -130,10 +139,10 @@ const getChart = () => {
     DZ.api('/chart/0/tracks?index=0&limit=11', 'GET', res  => {
         const data = res.data;
         //Mejor coincidencia
-        const album = document.getElementById("album-title");
+        const album = document.getElementById("albumTitle");
         const artist = document.getElementById("artist");
         const followers = document.getElementById("followers");
-        const cover = document.getElementById("first-result-cover");
+        const cover = document.getElementById("firstResultCover");
         album.innerHTML = `${data[0].title} - Albúm: ${data[0].album.title}`;
         artist.innerHTML = `${data[0].artist.name}`;
         cover.src = data[0].album.cover;
@@ -142,9 +151,9 @@ const getChart = () => {
         playIcon.onclick = () => playTrack(playIcon)
         data.shift();
         //Resultados
-        const resultsRowOne = document.getElementById("first-row");
+        const resultsRowOne = document.getElementById("firstRow");
         resultsRowOne.innerHTML = "";
-        const resultsRowTwo = document.getElementById("second-row");
+        const resultsRowTwo = document.getElementById("secondRow");
         resultsRowTwo .innerHTML = "";
         data.map((record, index) => {
             index < 5 ? addToRow(resultsRowOne, record) : addToRow(resultsRowTwo, record)
@@ -180,7 +189,8 @@ const addToRow = (row, record) => {
 
 const setPlayerInfo = (trackTitle, artistName, album) => {
     document.getElementById("playerAlbum").src = album;
-    document.getElementById("playerInfo").innerHTML = `<strong>${trackTitle}</strong><br>${artistName}`;
+    document.getElementById("playerTitle").innerHTML = trackTitle;
+    document.getElementById("playerArtist").innerHTML = artistName;
 }
 
 
