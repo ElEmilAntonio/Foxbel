@@ -136,7 +136,8 @@ const updateUserData = (id, name, token, status) => {
 }
 
 const getChart = () => {
-    DZ.api('/chart/0/tracks?index=0&limit=11', 'GET', res  => {
+    const queryTopChart = '/chart/0/tracks?index=0&limit=11';
+    DZ.api(queryTopChart, 'GET', res  => {
         const data = res.data;
         //Mejor coincidencia
         const album = document.getElementById("albumTitle");
