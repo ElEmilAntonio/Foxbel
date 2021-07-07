@@ -193,7 +193,8 @@ angapp.controller("AppController", function($scope, $route, $routeParams, $locat
 	DZ.Event.subscribe('player_loaded', function(){
 		console.log(LOGNS, 'check login...');
 
-		DZ.getLoginStatus(function(response) {
+		DZ.
+		LoginStatus(function(response) {
 			if (response.authResponse) {
 				console.log(LOGNS, 'check login: logged');
 				$scope.logged();

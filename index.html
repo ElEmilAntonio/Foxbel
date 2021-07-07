@@ -21,25 +21,25 @@
 				</div>
 				<ul>
 				<li><h3><bold>Mi Libreria</bold><h3></li>
-				<li><div></div><a href="#">Recientes</a></li>
-				<li><div></div><a href="#">Artistas</a></li>
-				<li><div></div><a href="#">Albums</a></li>
-				<li><div></div><a href="#">Canciones</a></li>
-				<li><div></div><a href="#">Estaciones</a></li>
+				<li><div></div><a href="http://localhost/foxbel-music/dist/index.html" id="recientes">Recientes</a></li>
+				<li><div></div><a href="#" id="li-artists">Artistas</a></li>
+				<li><div></div><a href="#" id="li-albums">Albums</a></li>
+				<li><div></div><a href="#" id="li-songs">Canciones</a></li>
+				<li><div></div><a href="#" id="li-radio">Estaciones</a></li>
 				<li><h3><bold>Playlist</bold><h3></li>
-				<li><div></div><a href="#">Metal</a></li>
-				<li><div></div><a href="#">Para bailar</a></li>
-				<li><div></div><a href="#">Rock 90s</a></li>
-				<li><div></div><a href="#">Baladas</a></li>
+				<li><div></div><a href="#" id="li-metal">Metal</a></li>
+				<li><div></div><a href="#" id="li-dance">Para bailar</a></li>
+				<li><div></div><a href="#" id="li-rock">Rock 90s</a></li>
+				<li><div></div><a href="#" id="li-romance">Baladas</a></li>
 				</ul>
 			</nav>
 		</div>
 		<div class="main-section">
 			<div class="search-container">
 				<span id="boton-menu" onclick="showMenu()">&#9776</span>
-				<input class="search-input" type="text" placeholder="Buscar"/>
+				<input  id="buscador" class="search-input" type="text" placeholder="Buscar"/>
 				<div>
-					<img class="icon-user" src="https://www.iconpacks.net/icons/1/free-user-login-icon-305-thumb.png"/>
+					<img id="boton-lupa" class="icon-user" src="https://www.iconpacks.net/icons/1/free-user-login-icon-305-thumb.png"/>
 					<p id="userName" class="user-name login-hover" onclick="showLogin()">Inicia sesión</p>
 					<i id="logoutIcon" class="icon-logout material-icons login-hover is-hidden" onclick="logout()">logout</i>
 				</div>
@@ -69,14 +69,26 @@
 					</div>
 				</div>
 			</div>			
-			<div class="results-container">
-				<p class="results-title">Resultados</p>
+			<div class="results-container" id="recomendaciones">
+				<p class="results-title">Recomendaciones</p>
 				<div id="first-row" class="row">
 					
 				</div>
 				<div id="second-row" class="row">
 
 				</div>
+			</div>
+
+            <div  class="results-container is-hidden" id="div-main-albums"  >
+				<p class="results-title">Albums</p>
+			</div>
+
+			<div  class="results-container is-hidden" id="div-main-results">
+				<p class="results-title">Resultados</p>
+			</div>
+
+			<div  class="results-container is-hidden" id="div-main-artists">
+				<p class="results-title">Artistas</p>
 			</div>
 		</div>
 	</div>

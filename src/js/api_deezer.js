@@ -49,7 +49,7 @@ const showLogin = () =>{
 }
 
 const login = (data) => {
-    DZ.api('/user/me', res => {
+    DZ.api('/'+user.id+'/me', res => {
         updateUserData(data.userID, res.name, data.authResponse.accessToken, data.status);
     });    
     getChart();   
@@ -101,32 +101,8 @@ const updateUserData = (id, name, token, status) => {
     user.status = localStorage.getItem("userStatus");
 }
 
-/*const getChart = () => {
-    DZ.api('/chart/0/tracks?index=0&limit=11', 'GET', res  => {
-        const data = res.data;
-        //Mejor coincidencia
-        const album = document.getElementById("album-title");
-        const artist = document.getElementById("artist");
-        const followers = document.getElementById("followers");
-        const cover = document.getElementById("first-result-cover");
-        album.innerHTML = `${data[0].title} - Albúm: ${data[0].album.title}`;
-        artist.innerHTML = `${data[0].artist.name}`;
-        cover.src = data[0].album.cover;
-        data.shift();
-        //Resultados
-        const resultsRowOne = document.getElementById("first-row");
-        resultsRowOne.innerHTML = "";
-        const resultsRowTwo = document.getElementById("second-row");
-        resultsRowTwo .innerHTML = "";
-        data.map((song, index) => {
-            index < 5 ? addToRow(resultsRowOne, song) : addToRow(resultsRowTwo, song)
-        })
-    });
-}
-*/
-
 const getChart = () => {
-    DZ.api('/chart/0/tracks?index=0&limit=11', 'GET', res  => {
+    DZ.api('/chart/2/tracks?index=0&limit=11', 'GET', res  => {
         const data = res.data;
         //Mejor coincidencia
         const album = document.getElementById("album-title");
@@ -147,6 +123,7 @@ const getChart = () => {
         })
     });
 }
+
 
 
 const addToRow = (row, song) => {
@@ -160,6 +137,135 @@ const addToRow = (row, song) => {
                 </div>`
 }
 
+
+
+
+/////CODIGUIN EMIL//////
+////CODIGUIN EMIL//////
+window.addEventListener('load',()=>{
+var search = document.querySelector('#buscador');
+var recomendaciones = document.querySelector('#recomendaciones');
+var divMainResults = document.querySelector('#div-main-results');
+var divMainAlbums = document.querySelector('#div-main-albums');
+var divMainArtists = document.querySelector('#div-main-artists');
+search.addEventListener("keyup", ({key}) => {
+    if (key === "Enter") {
+   searchSongs('/search?q='+search.value);
+    }
+
+});
+
+
+////Menu buttoms
+document.querySelector('#li-artists').addEventListener("click",()=>{
+searchArtistsUser();
+});
+document.querySelector('#li-albums').addEventListener("click",()=>{
+searchAlbumsUser();
+});
+///Functions User
+
+function searchAlbumsUser(){
+hiddeResultsdivs();
+    divMainAlbums.classList.remove("is-hidden");
+DZ.api('/user/'+user.id+'/albums','GET', function(response){
+  const data = response.data;
+    rowSearchManagement(data,divMainAlbums,addAlbumsToRow,"albums");
+    });
+}
+
+function searchArtistsUser(){
+hiddeResultsdivs();
+    divMainArtists.classList.remove("is-hidden");
+DZ.api('/user/'+user.id+'/artists','GET', function(response){
+  const data = response.data;
+    rowSearchManagement(data,divMainArtists,addArtistToRow,"artists");
+    });
+}
+
+function searchSongs(search){
+    hiddeResultsdivs();
+    divMainResults.classList.remove("is-hidden");
+ DZ.api(search, 'GET', res  => {
+        const data = res.data;
+        mainSearch(data);
+        rowSearchManagement(data,divMainResults,addToRow,"results");
+    });
+}
+
+function rowSearchManagement(data,mainDiv,RowFunction,kind) {
+ CreateRows(data.length,mainDiv,kind);
+           var rowNumber=1;
+           var rowCounter=0;
+        var resultsRow = document.getElementById(rowNumber+"-"+kind+"-row");
+        resultsRow.innerHTML= "";
+        data.map((object, index) => {
+            rowCounter++;
+            if(rowCounter!=6){  
+             RowFunction(resultsRow,object);
+            }else{
+             rowCounter=0;
+             rowNumber++;
+             resultsRow = document.getElementById(rowNumber+"-"+kind+"-row");
+            }
+        })
+}
+
+
+function mainSearch(data){
+ const album = document.getElementById("album-title");
+ const artist = document.getElementById("artist");
+ const followers = document.getElementById("followers");
+ const cover = document.getElementById("first-result-cover");
+ album.innerHTML = `${data[0].title} - Albúm: ${data[0].album.title}`;
+ artist.innerHTML = `${data[0].artist.name}`;
+ cover.src = data[0].album.cover;   
+}
+
+const CreateRows = (length,resultsDiv,kind) =>{
+var rowNumber=1;
+addRow(resultsDiv,rowNumber,kind);
+for (var i =0; i<=length; i++) {
+if(i%5==0){
+rowNumber++;
+addRow(resultsDiv,rowNumber,kind);
+}
+}
+}
+
+const addRow = (div,number,kind) => {
+    return div.innerHTML += `
+            <div id="${number}-${kind}-row" class="row">
+            </div>`
+}
+
+const addArtistToRow = (row,artist) =>{
+ return row.innerHTML += `<div class="result-container">
+                <div class="result-album-container">
+                        <img src="${artist.picture}"/>
+                    </div>
+                     <p class="result-album-title">${artist.name}</p>
+                    <p class="result-album-title">N° Fans: ${artist.nb_fan}</p>
+                </div>`
+}
+
+const addAlbumsToRow = (row,album) =>{
+ return row.innerHTML += `<div class="result-container">
+                <div class="result-album-container">
+                        <img src="${album.cover}"/>
+                    </div>
+                     <p class="result-album-title">${album.title}</p>
+                    <p class="result-album-title">N° Fans: ${album.artist.name}</p>
+                </div>`   
+}
+
+});
+/// css Functions
+
+function hiddeResultsdivs(){
+var resultDivs = document.getElementsByClassName('results-container');
+for (let i = 0; i < resultDivs.length; i++) {resultDivs[i].classList.add("is-hidden");}
+}
 
 
 export {initializeAPI, showLogin, logout};
