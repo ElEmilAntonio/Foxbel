@@ -185,9 +185,7 @@ const setPlayerInfo = (trackTitle, artistName, album) => {
 
 
 const playTrack = (element) => {
-    if(player.trackPlaying){ 
-        player.trackPlaying.pause(); 
-    }
+    if(player.trackPlaying) player.trackPlaying.pause(); 
     let tracks = document.querySelectorAll('.track-play');
     tracks.forEach(track => {
         track.innerHTML = 'play_arrow';
@@ -203,6 +201,10 @@ const playTrack = (element) => {
             const newTrack = new Track(data.artist.name, data.title, data.preview, data.album.cover, data.album.title);        
             player.tracks.push(newTrack);
             player.trackPlaying = new Audio(newTrack.preview);
+            player.trackPlaying.addEventListener('ended', () => {
+                player.trackPlaying.currentTime = 0;
+                pause(element);
+            });
             setPlayerInfo(newTrack.title, newTrack.artist, newTrack.album);
         }
 
@@ -235,7 +237,7 @@ const resume = (element = undefined) => {
 
 const updateElementIcon = (element, setPause = undefined) => {
     element.innerHTML = setPause ? 'pause' : 'play_arrow';
-    element.onclick = () => setPause ? pause(element) : resume(element);
+    element.onclick = () => setPause ? pause(element) : playTrack(element);
 }
 
 const updatePlayIcons = (setPause = undefined) => {
