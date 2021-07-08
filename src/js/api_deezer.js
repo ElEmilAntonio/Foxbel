@@ -13,15 +13,16 @@ let trackPlayingId = localStorage.getItem("trackPlayingId");
 let trackList = JSON.parse(localStorage.getItem("trackList"));
 let playerVolume = localStorage.getItem("playerVolume");
 let currentTimePlaying = localStorage.getItem("currentTimePlaying");
+
 let player = {
     trackPlaying: trackList && trackPlayingId ? new Audio(trackList[trackPlayingId].preview) : '',
     tracks: trackList ? trackList : [],
-    volume: playerVolume ? playerVolume.volume : 50
+    volume: playerVolume ? playerVolume : 50
 }
+
 let currentTrack = player.trackPlaying;
-if(currentTrack){
-    currentTrack.currentTime = currentTimePlaying ? currentTimePlaying : 0;
-}
+if(currentTrack) currentTrack.currentTime = currentTimePlaying ? currentTimePlaying : 0;
+
 
 let playerHTML = document.getElementById("iconPlayerPlay");
 
@@ -32,6 +33,7 @@ const initializeAPI = () => {
 		appId  : appID,
 		channelUrl : channelURL
 	});
+
     setEventListeners();
     setVolume(player.volume);
     getStatus();
@@ -43,10 +45,29 @@ const setEventListeners = () => {
     userName.onclick = () => showLogin()
     let logoutIcon = document.getElementById("logoutIcon");
     logoutIcon.onclick = () => showLogin()
+    let volumeController = document.getElementById("volume");
+    volumeController.oninput = () => onVolumeChanged(volumeController)
 }
 
 const setVolume = (volume) => {
     document.getElementById("volume").value = volume;
+    setVolumeIcon();
+}
+
+const setVolumeIcon = () => {
+    let volume = player.volume;
+    let volumeIcon = document.getElementById("volumeIcon");
+    if(volume >= 0.5) return volumeIcon.innerHTML = 'volume_up';
+    if(volume >= 0.01) return volumeIcon.innerHTML = 'volume_down';
+    volumeIcon.innerHTML = 'volume_off';
+}
+
+
+const onVolumeChanged = (element) => {
+    localStorage.setItem("playerVolume", element.value);
+    player.volume = element.value;
+    player.trackPlaying.volume = player.volume;
+    setVolumeIcon();
 }
 
 const getStatus = () => { 
@@ -238,6 +259,7 @@ const pause = (element = undefined) => {
 
 const resume = (element = undefined) => {
     if(player.trackPlaying){
+        player.trackPlaying.volume = player.volume;
         player.trackPlaying.play();
         playerHTML.classList.remove("fa-play");
         playerHTML.classList.add("fa-pause");
