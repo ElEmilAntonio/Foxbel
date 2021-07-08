@@ -1,3 +1,4 @@
+import { Player } from './player.js';
 import {Track} from './track.js';
 
 const appID = '489402';
@@ -14,28 +15,11 @@ let trackList = JSON.parse(localStorage.getItem("trackList"));
 let playerVolume = localStorage.getItem("playerVolume");
 let currentTimePlaying = localStorage.getItem("currentTimePlaying");
 
-let player = {
-    trackPlaying: trackList && trackPlayingId ? new Audio(trackList[trackPlayingId].preview) : '',
-    tracks: trackList ? trackList : [],
-    volume: playerVolume ? playerVolume : 50
-}
+let player = trackList && trackPlayingId ? new Player(trackList, playerVolume, new Audio(trackList[trackPlayingId].preview)) : new Player();
 
-let currentTrack = player.trackPlaying;
-if(currentTrack) currentTrack.currentTime = currentTimePlaying ? currentTimePlaying : 0;
+if(player.isTrackSet()) { player.trackPlaying.currentTime = currentTimePlaying }
 
-if(trackList){    
-    player.trackPlaying.addEventListener('ended', () => {
-        player.trackPlaying.currentTime = 0;
-        playerHTML.classList.add("fa-play");
-        playerHTML.classList.remove("fa-pause");
-        playerHTML.onclick = () => resume();
-        localStorage.setItem("currentTimePlaying", player.trackPlaying.currentTime);
-        updatePlayIcons();
-    });
-}
-
-
-let playerHTML = document.getElementById("iconPlayerPlay");
+if(trackList) player.setOnTrackEnded()
 
 const appSecretKey = 'a5775013018f7dc67e119742b3b471ee';
 
@@ -46,72 +30,10 @@ const initializeAPI = () => {
 	});
 
     setEventListeners();
-    setVolume(player.volume);
     getStatus();
 }
 
-const setEventListeners = () => {
-    playerHTML.onclick = () => resume()
-    let userName = document.getElementById("userName");
-    userName.onclick = () => showLogin()
-    let logoutIcon = document.getElementById("logoutIcon");
-    logoutIcon.onclick = () => showLogin()
-    let volumeController = document.getElementById("volume");
-    volumeController.oninput = () => onVolumeChanged(volumeController)
-}
-
-const setVolume = (volume) => {
-    document.getElementById("volume").value = volume;
-    setVolumeIcon();
-}
-
-const setVolumeIcon = () => {
-    let volume = player.volume;
-    let volumeIcon = document.getElementById("volumeIcon");
-    if(volume >= 0.5) return volumeIcon.innerHTML = 'volume_up';
-    if(volume >= 0.01) return volumeIcon.innerHTML = 'volume_down';
-    volumeIcon.innerHTML = 'volume_off';
-}
-
-const onVolumeChanged = (element) => {
-    localStorage.setItem("playerVolume", element.value);
-    player.volume = element.value;
-    player.trackPlaying.volume = player.volume;
-    setVolumeIcon();
-}
-
-const getStatus = () => { 
-    if(user.status == "connected"){  
-        let logoutIcon = document.getElementById("logoutIcon");
-        logoutIcon.classList.remove("is-hidden");
-        let userName = document.getElementById("userName");
-        userName.innerHTML = user.name;
-        userName.onclick = null;
-        userName.classList.remove("login-hover");  
-        let userUnknownBanner = document.getElementById("userUnknownBanner");
-        userUnknownBanner.classList.add("is-hidden");  
-        let firstResultBanner = document.getElementById("firstResultBanner");
-        firstResultBanner.classList.remove("is-hidden");
-        if(trackPlayingId){
-            let trackTitle = player.tracks[trackPlayingId].title;
-            let artistName = player.tracks[trackPlayingId].artist;
-            let album = player.tracks[trackPlayingId].album;
-            setPlayerInfo(trackTitle, artistName, album);
-        }
-        getChart();   
-    }else{
-        alert("Debe identificarse con Deezer para usar Foxbel Music");
-    }
-}
-
-const logout = () => {
-    if(confirm("¿Deseas cerrar sesión?")){
-        updateUserData(null, null, null, 'not_authorized');
-        DZ.logout();
-    }
-}
-
-const showLogin = () =>{
+const showLoginWindow = () =>{
     DZ.login(response => {
         response.status == 'connected' ? login(response) : getStatus()
     }, {perms: 'basic_access, email, offline_access'});
@@ -122,6 +44,13 @@ const login = (data) => {
         updateUserData(data.userID, res.name, data.authResponse.accessToken, data.status);
     });    
     getChart();   
+}
+
+const logout = () => {
+    if(confirm("¿Deseas cerrar sesión?")){
+        updateUserData(null, null, null, 'not_authorized');
+        DZ.logout();
+    }
 }
 
 const updateUserData = (id, name, token, status) => {  
@@ -152,7 +81,7 @@ const updateUserData = (id, name, token, status) => {
         //Hidding logout icon, resetting userName text/click event
         logoutIcon.classList.add("is-hidden");
         userName.innerHTML = "Inicia sesión";
-        userName.onclick = () => showLogin();
+        userName.onclick = () => showLoginWindow();
         userName.classList.add("login-hover");  
         //Cleaning search results        
         const resultsRowOne = document.getElementById("firstRow");
@@ -166,21 +95,45 @@ const updateUserData = (id, name, token, status) => {
     user.status = localStorage.getItem("userStatus");
 }
 
+const getStatus = () => { 
+    if(user.status == "connected"){  
+        let logoutIcon = document.getElementById("logoutIcon");
+        logoutIcon.classList.remove("is-hidden");
+        let userName = document.getElementById("userName");
+        userName.innerHTML = user.name;
+        userName.onclick = null;
+        userName.classList.remove("login-hover");  
+        let userUnknownBanner = document.getElementById("userUnknownBanner");
+        userUnknownBanner.classList.add("is-hidden");  
+        let firstResultBanner = document.getElementById("firstResultBanner");
+        firstResultBanner.classList.remove("is-hidden");
+        if(trackPlayingId){
+            let trackTitle = player.tracks[trackPlayingId].title;
+            let artistName = player.tracks[trackPlayingId].artist;
+            let album = player.tracks[trackPlayingId].album;
+            setPlayerInfo(trackTitle, artistName, album);
+        }
+        getChart();   
+    }else{
+        alert("Debe identificarse con Deezer para usar Foxbel Music");
+    }
+}
+
 const getChart = () => {
     const queryTopChart = '/chart/0/tracks?index=0&limit=11';
     DZ.api(queryTopChart, 'GET', res  => {
         const data = res.data;
+        const firstResult = data[0];
         //Mejor coincidencia
         const album = document.getElementById("albumTitle");
+        album.innerHTML = `${firstResult.title} - Albúm: ${firstResult.album.title}`;
         const artist = document.getElementById("artist");
-        const followers = document.getElementById("followers");
+        artist.innerHTML = `${firstResult.artist.name}`;
         const cover = document.getElementById("firstResultCover");
-        album.innerHTML = `${data[0].title} - Albúm: ${data[0].album.title}`;
-        artist.innerHTML = `${data[0].artist.name}`;
-        cover.src = data[0].album.cover;
-        const playIcon = document.getElementById("firstResultPlayIcon");
-        playIcon.setAttribute('data', JSON.stringify(data[0]));
-        playIcon.onclick = () => playTrack(playIcon)
+        cover.src = firstResult.album.cover;
+        const firstResultIcon = document.getElementById("firstResultPlayIcon");
+        firstResultIcon.setAttribute('data', JSON.stringify(firstResult));
+        firstResultIcon.onclick = () => setTrack(firstResultIcon)
         data.shift();
         //Resultados
         const resultsRowOne = document.getElementById("firstRow");
@@ -206,7 +159,7 @@ const addToRow = (row, record) => {
     newRecord.classList.add("icon");
     newRecord.classList.add("material-icons");
     newRecord.setAttribute("data", JSON.stringify(record));
-    newRecord.onclick = () => playTrack(newRecord);
+    newRecord.onclick = () => setTrack(newRecord);
     albumContainer.appendChild(img);
     albumContainer.appendChild(newRecord);
     let title = document.createElement("p");
@@ -219,21 +172,14 @@ const addToRow = (row, record) => {
     row.appendChild(container);
 }
 
-const setPlayerInfo = (trackTitle, artistName, album) => {
-    document.getElementById("playerAlbum").src = album;
-    document.getElementById("playerTitle").innerHTML = trackTitle;
-    document.getElementById("playerArtist").innerHTML = artistName;
-}
-
-
-const playTrack = (element) => {
+const setTrack = (element) => {
     if(player.trackPlaying) player.trackPlaying.pause(); 
     let tracks = document.querySelectorAll('.track-play');
     tracks.forEach(track => {
         track.innerHTML = 'play_arrow';
-        track.onclick = () => playTrack(track);
+        track.onclick = () => setTrack(track);
     })
-    player.tracks = [];
+    player.setTracks([]);
     const data = JSON.parse(element.getAttribute('data'));
 
     if(data.preview != player.trackPlaying.src){
@@ -245,7 +191,7 @@ const playTrack = (element) => {
             player.trackPlaying = new Audio(newTrack.preview);  
             player.trackPlaying.addEventListener('ended', () => {
                 player.trackPlaying.currentTime = 0;
-                pause(element);
+                player.pause(element);
             });
             setPlayerInfo(newTrack.title, newTrack.artist, newTrack.album);
         }
@@ -256,33 +202,32 @@ const playTrack = (element) => {
         localStorage.setItem("volumePlayer", player.volume);
     }
     
-    resume();
+    player.resume();
 }
 
-const pause = (element = undefined) => {
-    player.trackPlaying.pause();
-    playerHTML.classList.add("fa-play");
-    playerHTML.classList.remove("fa-pause");
-    playerHTML.onclick = () => resume();
-    localStorage.setItem("currentTimePlaying", player.trackPlaying.currentTime);
-    element ? updateElementIcon(element) : updatePlayIcons();
+const setEventListeners = () => {
+    let playerHTML = document.getElementById("iconPlayerPlay");
+    playerHTML.onclick = () => player.resume()
+    let userName = document.getElementById("userName");
+    userName.onclick = () => showLoginWindow()
+    let logoutIcon = document.getElementById("logoutIcon");
+    logoutIcon.onclick = () => logout()
+    let volumeHTML = document.getElementById("volume");
+    volumeHTML.oninput = () => player.setVolume(volumeHTML)
 }
 
-
-const resume = (element = undefined) => {
-    if(player.trackPlaying){
-        player.trackPlaying.volume = player.volume;
-        player.trackPlaying.play();
-        playerHTML.classList.remove("fa-play");
-        playerHTML.classList.add("fa-pause");
-        playerHTML.onclick = () => pause();
-        element ? updateElementIcon(element) : updatePlayIcons(true);
-    }
+const setPlayerInfo = (trackTitle, artistName, album) => {
+    document.getElementById("playerAlbum").src = album;
+    document.getElementById("playerTitle").innerHTML = trackTitle;
+    document.getElementById("playerArtist").innerHTML = artistName;
+    let volumeHTML = document.getElementById("volume");
+    volumeHTML.value = player.volume;
+    player.setVolume(volumeHTML);
 }
 
 const updateElementIcon = (element, setPause = undefined) => {
     element.innerHTML = setPause ? 'pause' : 'play_arrow';
-    element.onclick = () => setPause ? pause(element) : playTrack(element);
+    element.onclick = () => setPause ? player.pause(element) : setTrack(element);
 }
 
 const updatePlayIcons = (setPause = undefined) => {
@@ -291,12 +236,9 @@ const updatePlayIcons = (setPause = undefined) => {
         const data = JSON.parse(track.getAttribute('data'));
         if(data.preview == player.trackPlaying.src){
             track.innerHTML = setPause ? 'pause': 'play_arrow';
-            track.onclick = () => setPause ? pause(track) : resume();
+            track.onclick = () => setPause ? player.pause(track) : player.resume();
         }
     });
 }
 
-
-
-
-export {initializeAPI, showLogin, logout, playTrack, resume, pause};
+export {initializeAPI, updateElementIcon, updatePlayIcons};
