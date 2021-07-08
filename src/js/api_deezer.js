@@ -23,6 +23,17 @@ let player = {
 let currentTrack = player.trackPlaying;
 if(currentTrack) currentTrack.currentTime = currentTimePlaying ? currentTimePlaying : 0;
 
+if(trackList){    
+    player.trackPlaying.addEventListener('ended', () => {
+        player.trackPlaying.currentTime = 0;
+        playerHTML.classList.add("fa-play");
+        playerHTML.classList.remove("fa-pause");
+        playerHTML.onclick = () => resume();
+        localStorage.setItem("currentTimePlaying", player.trackPlaying.currentTime);
+        updatePlayIcons();
+    });
+}
+
 
 let playerHTML = document.getElementById("iconPlayerPlay");
 
@@ -61,7 +72,6 @@ const setVolumeIcon = () => {
     if(volume >= 0.01) return volumeIcon.innerHTML = 'volume_down';
     volumeIcon.innerHTML = 'volume_off';
 }
-
 
 const onVolumeChanged = (element) => {
     localStorage.setItem("playerVolume", element.value);
@@ -232,7 +242,7 @@ const playTrack = (element) => {
         }else{
             const newTrack = new Track(data.artist.name, data.title, data.preview, data.album.cover, data.album.title);        
             player.tracks.push(newTrack);
-            player.trackPlaying = new Audio(newTrack.preview);
+            player.trackPlaying = new Audio(newTrack.preview);  
             player.trackPlaying.addEventListener('ended', () => {
                 player.trackPlaying.currentTime = 0;
                 pause(element);
@@ -240,6 +250,7 @@ const playTrack = (element) => {
             setPlayerInfo(newTrack.title, newTrack.artist, newTrack.album);
         }
 
+        localStorage.setItem("currentTimePlaying", 0);
         localStorage.setItem("trackPlayingId", 0);
         localStorage.setItem("trackList", JSON.stringify(player.tracks));
         localStorage.setItem("volumePlayer", player.volume);
@@ -253,6 +264,7 @@ const pause = (element = undefined) => {
     playerHTML.classList.add("fa-play");
     playerHTML.classList.remove("fa-pause");
     playerHTML.onclick = () => resume();
+    localStorage.setItem("currentTimePlaying", player.trackPlaying.currentTime);
     element ? updateElementIcon(element) : updatePlayIcons();
 }
 
@@ -279,7 +291,7 @@ const updatePlayIcons = (setPause = undefined) => {
         const data = JSON.parse(track.getAttribute('data'));
         if(data.preview == player.trackPlaying.src){
             track.innerHTML = setPause ? 'pause': 'play_arrow';
-            track.onclick = () => setPause ? pause(track) : resume(track);
+            track.onclick = () => setPause ? pause(track) : resume();
         }
     });
 }
