@@ -58,11 +58,24 @@
     left: 0;
     bottom: 0;
     width: 100%;
-    height: 80px; 
+    height: 82px; 
+    display: flex;
+    flex-direction: column;
+    background-color:#FF5252;
+    z-index: 10;
+  }
+
+  .player-container{
     background-color:#FF5252;
     color: white;
     display: flex;
-    z-index: 10;
+    width: 100%;
+    height: 80px; 
+  }
+  .player-bar{
+    font-size: 2px;
+    width: 0;
+    margin: auto 0;
   }
   
   
@@ -434,7 +447,7 @@ body, html{
 :focus{ outline: none }
 
 .main-container{    
-    height: calc(100% - 80px);
+    height: calc(100% - 82px);
     display: flex;
 }
 .menu-container{

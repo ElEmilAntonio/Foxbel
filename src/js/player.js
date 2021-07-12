@@ -13,9 +13,16 @@ class Player{
         if(this.trackPlaying){
             this.trackPlaying.volume = this.volume;
             this.trackPlaying.play();
+            
             let timingPlayer = document.getElementById("playerTime");
+            let bar = document.getElementById("playerBar");
+            bar.style.width = '0px';
+
             this.timing = setInterval(()=>{
-                timingPlayer.innerHTML = formatTime(this.trackPlaying.currentTime);
+                timingPlayer.innerHTML = formatTime(Math.round(this.trackPlaying.currentTime));
+                let widthScreen = window.innerWidth;
+                let barIncrement = widthScreen/this.trackPlaying.duration;
+                bar.style.width = (barIncrement*Math.round(this.trackPlaying.currentTime))+'px';
             }, 0);
             playerHTML.classList.remove("fa-play");
             playerHTML.classList.add("fa-pause");
@@ -53,6 +60,12 @@ class Player{
     }
 
     setCurrentTime(currentTimePlaying){
+        this.trackPlaying.onloadedmetadata = () => {
+            let bar = document.getElementById("playerBar");
+            let widthScreen = window.innerWidth;
+            let barIncrement = widthScreen/this.trackPlaying.duration;
+            bar.style.width = (barIncrement*Math.round(this.trackPlaying.currentTime))+'px';
+        }
         this.trackPlaying.currentTime = currentTimePlaying;
         let timingPlayer = document.getElementById("playerTime");
         timingPlayer.innerHTML = formatTime(this.trackPlaying.currentTime);
@@ -60,6 +73,7 @@ class Player{
 
     setOnTrackEnded(element = undefined){
         this.trackPlaying.addEventListener('ended', () => {
+            clearInterval(this.timing);
             this.trackPlaying.currentTime = 0;
             this.trackPlaying.pause();
             element ? this.pause(element) : this.pause();
