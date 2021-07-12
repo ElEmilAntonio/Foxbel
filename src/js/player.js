@@ -1,6 +1,8 @@
 import {updatePlayIcons, updateElementIcon} from './api_deezer.js';
 
 class Player{
+    timing = undefined;
+
     constructor(trackList = [], volume = 0.5, nowPlaying = ''){
         this.tracks = trackList,
         this.volume = volume,
@@ -11,6 +13,10 @@ class Player{
         if(this.trackPlaying){
             this.trackPlaying.volume = this.volume;
             this.trackPlaying.play();
+            let timingPlayer = document.getElementById("playerTime");
+            this.timing = setInterval(()=>{
+                timingPlayer.innerHTML = formatTime(this.trackPlaying.currentTime);
+            }, 0);
             playerHTML.classList.remove("fa-play");
             playerHTML.classList.add("fa-pause");
             playerHTML.onclick = () => this.pause();
@@ -20,6 +26,7 @@ class Player{
 
     pause(element = undefined){
         this.trackPlaying.pause();
+        clearInterval(this.timing);
         playerHTML.classList.add("fa-play");
         playerHTML.classList.remove("fa-pause");
         playerHTML.onclick = () => this.resume();
@@ -45,16 +52,29 @@ class Player{
         return this.trackPlaying == '' ? false : true;
     }
 
+    setCurrentTime(currentTimePlaying){
+        this.trackPlaying.currentTime = currentTimePlaying;
+        let timingPlayer = document.getElementById("playerTime");
+        timingPlayer.innerHTML = formatTime(this.trackPlaying.currentTime);
+    }
+
     setOnTrackEnded(element = undefined){
         this.trackPlaying.addEventListener('ended', () => {
             this.trackPlaying.currentTime = 0;
+            this.trackPlaying.pause();
             element ? this.pause(element) : this.pause();
         });
     }
 }
 
-
 let playerHTML = document.getElementById("iconPlayerPlay");
 
+function formatTime(seconds) {
+    let minutes = Math.floor(seconds / 60);
+    minutes = (minutes >= 10) ? minutes : "0" + minutes;
+    seconds = Math.floor(seconds % 60);
+    seconds = (seconds >= 10) ? seconds : "0" + seconds;
+    return minutes + ":" + seconds;
+  }
 
 export { Player }

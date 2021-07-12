@@ -17,7 +17,7 @@ let currentTimePlaying = localStorage.getItem("currentTimePlaying");
 
 let player = trackList && trackPlayingId ? new Player(trackList, playerVolume, new Audio(trackList[trackPlayingId].preview)) : new Player();
 
-if(player.isTrackSet()) { player.trackPlaying.currentTime = currentTimePlaying }
+if(player.isTrackSet()) { player.setCurrentTime(currentTimePlaying) }
 
 if(trackList) player.setOnTrackEnded()
 
@@ -28,7 +28,6 @@ const initializeAPI = () => {
 		appId  : appID,
 		channelUrl : channelURL
 	});
-
     setEventListeners();
     getStatus();
 }
