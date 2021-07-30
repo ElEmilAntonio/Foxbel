@@ -132,7 +132,7 @@ const getChart = () => {
         cover.src = firstResult.album.cover;
         const firstResultIcon = document.getElementById("firstResultPlayIcon");
         firstResultIcon.setAttribute('data', JSON.stringify(firstResult));
-        firstResultIcon.onclick = () => setTrack(firstResultIcon)
+        firstResultIcon.onclick = () => setTrack(firstResultIcon);
         data.shift();
         //Resultados
         const resultsRowOne = document.getElementById("firstRow");
@@ -253,27 +253,22 @@ var divMainAlbums = document.querySelector('#div-main-albums');
 var divMainArtists = document.querySelector('#div-main-artists');
 search.addEventListener("keyup", ({key}) => {
     if (key === "Enter") {
-   searchSongs('/search?q='+search.value);
+        searchSongs('/search?q='+search.value+'&limit=12');
     }
-
 });
 
 
 ////Menu buttoms
-document.querySelector('#li-artists').addEventListener("click",()=>{
-searchArtistsUser();
-});
-document.querySelector('#li-albums').addEventListener("click",()=>{
-searchAlbumsUser();
-});
-///Functions User
+document.querySelector('#li-artists').addEventListener("click",()=> searchArtistsUser() );
+document.querySelector('#li-albums').addEventListener("click",()=> searchAlbumsUser() );
 
+///Functions User
 function searchAlbumsUser(){
-hiddeResultsdivs();
+    hiddeResultsdivs();
     divMainAlbums.classList.remove("is-hidden");
-DZ.api('/user/'+user.id+'/albums','GET', function(response){
-  const data = response.data;
-    rowSearchManagement(data,divMainAlbums,addAlbumsToRow,"albums");
+    DZ.api('/user/'+user.id+'/albums','GET', function(response){
+        const data = response.data;
+        rowSearchManagement(data,divMainAlbums,addAlbumsToRow,"albums");
     });
 }
 
@@ -289,51 +284,56 @@ DZ.api('/user/'+user.id+'/artists','GET', function(response){
 function searchSongs(search){
     hiddeResultsdivs();
     divMainResults.classList.remove("is-hidden");
- DZ.api(search, 'GET', res  => {
+    DZ.api(search, 'GET', res  => {
         const data = res.data;
         mainSearch(data);
+        data.shift();
         rowSearchManagement(data,divMainResults,addToRow,"results");
     });
 }
 
-function rowSearchManagement(data,mainDiv,RowFunction,kind) {
- CreateRows(data.length,mainDiv,kind);
-           var rowNumber=1;
-           var rowCounter=0;
-        var resultsRow = document.getElementById(rowNumber+"-"+kind+"-row");
-        resultsRow.innerHTML= "";
-        data.map((object, index) => {
-            rowCounter++;
-            if(rowCounter!=6){  
-             RowFunction(resultsRow,object);
-            }else{
-             rowCounter=0;
-             rowNumber++;
-             resultsRow = document.getElementById(rowNumber+"-"+kind+"-row");
-            }
-        })
+function rowSearchManagement(data,mainDiv,addToRow,kind) {
+    createRows(data.length,mainDiv,kind);
+    var rowNumber=1;
+    var rowCounter=0;
+    var resultsRow = document.getElementById(rowNumber+"-"+kind+"-row");
+    resultsRow.innerHTML= "";
+    data.map(object => {
+        rowCounter++;
+        if(rowCounter != 6){  
+            addToRow(resultsRow,object);
+        }else{
+            rowCounter=0;
+            rowNumber++;
+            resultsRow = document.getElementById(rowNumber+"-"+kind+"-row");
+            resultsRow.innerHTML= "";
+        }
+    });
 }
 
 
 function mainSearch(data){
- const album = document.getElementById("album-title");
+ const album = document.getElementById("albumTitle");
  const artist = document.getElementById("artist");
  const followers = document.getElementById("followers");
- const cover = document.getElementById("first-result-cover");
+ const cover = document.getElementById("firstResultCover");
  album.innerHTML = `${data[0].title} - Albúm: ${data[0].album.title}`;
  artist.innerHTML = `${data[0].artist.name}`;
  cover.src = data[0].album.cover;   
+ const firstResultIcon = document.getElementById("firstResultPlayIcon");
+ firstResultIcon.setAttribute('data', JSON.stringify(data[0]));
+ firstResultIcon.onclick = () => setTrack(firstResultIcon);
 }
 
-const CreateRows = (length,resultsDiv,kind) =>{
-var rowNumber=1;
-addRow(resultsDiv,rowNumber,kind);
-for (var i =0; i<=length; i++) {
-if(i%5==0){
-rowNumber++;
-addRow(resultsDiv,rowNumber,kind);
-}
-}
+const createRows = (length,resultsDiv,kind) =>{
+    var rowNumber=1;
+    addRow(resultsDiv,rowNumber,kind);
+    for (var i =0; i<=length; i++) {
+        if(i%5==0){
+            rowNumber++;
+            addRow(resultsDiv,rowNumber,kind);
+        }
+    }
 }
 
 const addRow = (div,number,kind) => {
@@ -366,8 +366,8 @@ const addAlbumsToRow = (row,album) =>{
 /// css Functions
 
 function hiddeResultsdivs(){
-var resultDivs = document.getElementsByClassName('results-container');
-for (let i = 0; i < resultDivs.length; i++) {resultDivs[i].classList.add("is-hidden");}
+    var resultDivs = document.getElementsByClassName('results-container');
+    for (let i = 0; i < resultDivs.length; i++) {resultDivs[i].classList.add("is-hidden");}
 }
 
 
